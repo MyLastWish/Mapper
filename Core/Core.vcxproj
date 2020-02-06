@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Graphic;$(SolutionDir)SVG;C:\Users\Adam\source\repos\Mapper\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)API/Cartesian;$(SolutionDir)API;$(SolutionDir)Graphic;$(SolutionDir)NanoSVG;$(SolutionDir)SVG;C:\Users\Adam\source\repos\Mapper\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,7 +90,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Graphic;$(SolutionDir)SVG;C:\Users\Adam\source\repos\Mapper\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)API/Cartesian;$(SolutionDir)API;$(SolutionDir)Graphic;$(SolutionDir)NanoSVG;$(SolutionDir)SVG;C:\Users\Adam\source\repos\Mapper\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -106,7 +106,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Graphic;$(SolutionDir)SVG;C:\Users\Adam\source\repos\Mapper\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)API/Cartesian;$(SolutionDir)API;$(SolutionDir)Graphic;$(SolutionDir)NanoSVG;$(SolutionDir)SVG;C:\Users\Adam\source\repos\Mapper\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,7 +124,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Graphic;$(SolutionDir)SVG;C:\Users\Adam\source\repos\Mapper\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)API/Cartesian;$(SolutionDir)API;$(SolutionDir)Graphic;$(SolutionDir)NanoSVG;$(SolutionDir)SVG;C:\Users\Adam\source\repos\Mapper\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,8 +146,14 @@
     <ClInclude Include="Callbacks.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\API\API.vcxproj">
+      <Project>{039481cc-e76a-41aa-8aec-f33bf887931d}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Graphic\Graphic.vcxproj">
       <Project>{84934ee8-eed9-454f-a22f-a206afed545f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\NanoSVG\NanoSVG.vcxproj">
+      <Project>{6f73c110-ddc7-40b1-8ef3-8b45a9d82aa1}</Project>
     </ProjectReference>
     <ProjectReference Include="..\SVG\SVG.vcxproj">
       <Project>{54156c46-4213-41b4-9ce2-f85adee02f3f}</Project>

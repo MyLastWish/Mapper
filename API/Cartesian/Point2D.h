@@ -9,7 +9,7 @@ namespace API
 		class Point2D : public Object2D<T>
 		{
 		public:
-			Point2D();
+			Point2D() : Object2D<T>((T)0.0f, (T)0.0f) {}
 			Point2D(T x, T y) : Object2D<T>(x, y) {}
 			/*void Move(Vector2D<float>& vector)
 			{
