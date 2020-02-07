@@ -27,18 +27,17 @@ SVG::Data::Path::Path(NSVGpath* originalPath)
 			API::Cartesian::Point2D<float>(points[4], points[5]),
 			API::Cartesian::Point2D<float>(points[6], points[7]));
 		unsigned resultCount = 0;
-		API::Cartesian::Point2D<float>* resultPoints = curve.Subdivide(0.2f, &resultCount);
+		API::Cartesian::Point2D<float>* resultPoints = curve.Subdivide(1.0f, &resultCount);
 		for (unsigned j = 0; j < resultCount; j++)
 		{
 			_addPointAndIndex(resultPoints[j]);
 		}
-		free(resultPoints);
 	}
 }
 
 void SVG::Data::Path::_addPointAndIndex(API::Cartesian::Point2D<float> point)
 {
-	if (_indices == nullptr || _points == nullptr)
+	if (_indices == nullptr || _points == nullptr || _indexCount == 0 || _pointCount == 0)
 	{
 		_indices = (unsigned*)malloc(sizeof(unsigned));
 		_indices[0] = 0;

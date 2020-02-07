@@ -22,13 +22,13 @@ namespace API
 			API::Cartesian::Point2D<T> _end;
 
 		public:
-			Vector2D() {}
-			Vector2D(const Vector2D<T>& original) { SetPoints(original.GetStart(), original.GetEnd()); }
-			Vector2D(T x, T y) { SetCoords2D(x, y); }
-			Vector2D(API::Cartesian::Point2D<T> start, API::Cartesian::Point2D<T> end) { _start = start; _end = end; }
+			Vector2D() : Object2D<T>((T)0.0f, (T)0.0f) {}
+			Vector2D(const Vector2D<T>& original) : Object2D<T>((T)0.0f, (T)0.0f) { SetPoints(original.GetStart(), original.GetEnd()); }
+			Vector2D(T x, T y) : Object2D<T>(x, y) { SetCoords2D(x, y); }
+			Vector2D(API::Cartesian::Point2D<T> start, API::Cartesian::Point2D<T> end) : Object2D<T>((T)0.0f, (T)0.0f) { _start = start; _end = end; }
 			T GetX() { return _end.GetX() - _start.GetX(); }
 			T GetY() { return _end.GetY() - _start.GetY(); }
-			T GetLength() const { return std::sqrt(std::pow(_x, 2), std::pow(_y, 2)); }
+			T GetLength() const { return std::sqrt(std::pow(this->_x, 2) + std::pow(this->_y, 2)); }
 			API::Cartesian::Point2D<T> GetStart() const { return _start; }
 			API::Cartesian::Point2D<T> GetEnd() const { return _end; }
 			void MoveStart(Vector2D<T> vec)

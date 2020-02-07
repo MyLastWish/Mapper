@@ -21,16 +21,17 @@ void API::Cartesian::Curves::BezierCurve::_setPoints(API::Cartesian::Point2D<flo
 
 API::Cartesian::Point2D<float>* API::Cartesian::Curves::BezierCurve::Subdivide(float minimalLength, unsigned* count)
 {
-	unsigned counter = 1;
 	API::Cartesian::Point2D<float>* results;
 	std::vector<API::Cartesian::Curves::BezierCurve*> curves;
 	curves.push_back(this);
-	bool completed = true;
+	unsigned counter = 1;
+	bool completed;
 	do
 	{
+		completed = true;
 		std::vector<API::Cartesian::Curves::BezierCurve*> curvesToBeAdded;
 		unsigned toBeAddedCount = 0;
-		for (int i = 0; i < curves.size(); i++)
+		for (int i = 0; i < counter; i++)
 		{
 			API::Cartesian::Curves::BezierCurve** subdivisonResults = curves[i]->DivideInTwo(minimalLength);
 			if (subdivisonResults == nullptr)
@@ -43,6 +44,7 @@ API::Cartesian::Point2D<float>* API::Cartesian::Curves::BezierCurve::Subdivide(f
 				completed &= false;
 				curvesToBeAdded.push_back(subdivisonResults[0]);
 				curvesToBeAdded.push_back(subdivisonResults[1]);
+				toBeAddedCount += 2;
 			}
 		}
 		for (unsigned i = 0; i < toBeAddedCount; i++)
@@ -73,6 +75,12 @@ API::Cartesian::Point2D<float> API::Cartesian::Curves::BezierCurve::GetEnd() con
 
 API::Cartesian::Curves::BezierCurve** API::Cartesian::Curves::BezierCurve::DivideInTwo(float minimalLength)
 {
+	if (_valueInToleranceRangeFrom((this->_firstControlPoint.GetX() - this->_start.GetX()) / (this->_start.GetX() - this->_end.GetX()), minimalLength, (this->_firstControlPoint.GetY() - this->_start.GetY()) / (this->_start.GetY() - this->_end.GetY()))
+		&& _valueInToleranceRangeFrom((this->_secondControlPoint.GetX() - this->_start.GetX()) / (this->_start.GetX() - this->_end.GetX()), minimalLength, (this->_secondControlPoint.GetY() - this->_start.GetY()) / (this->_start.GetY() - this->_end.GetY())))
+	{
+		return nullptr;
+	}
+
 	API::Cartesian::Point2D<float> midStartFirstCP, midFirstCPSecondCP, midSecondCPEnd, midStartSide, midEndSide, midOverall;
 	midStartFirstCP = API::Cartesian::Point2D<float>((this->_start.GetX() + this->_firstControlPoint.GetX()) / 2.0f, (this->_start.GetY() + this->_firstControlPoint.GetY()) / 2.0f);
 	midFirstCPSecondCP = API::Cartesian::Point2D<float>((this->_firstControlPoint.GetX() + this->_secondControlPoint.GetX()) / 2.0f, (this->_firstControlPoint.GetY() + this->_secondControlPoint.GetY()) / 2.0f);
@@ -115,4 +123,23 @@ float API::Cartesian::Curves::BezierCurve::_distanceToPoint(API::Cartesian::Poin
 	}
 	shortestVector.SetCoords2D(_start.GetX() + ratio * startToEndVector.GetX() - point.GetX(), _start.GetY() + ratio * startToEndVector.GetY() - point.GetY());
 	return shortestVector.GetLength();
+}
+bool API::Cartesian::Curves::BezierCurve::_valueInToleranceRangeFrom(float value, float tolerance, float reference)
+{
+	if (value != value)
+	{
+		value = 0.0f;
+	}
+	if (tolerance != tolerance)
+	{
+		tolerance = 0.0f;
+	}
+	if (reference != reference)
+	{
+		reference = 0.0f;
+	}
+	float upper, lower;
+	upper = reference + tolerance;
+	lower = reference - tolerance;
+	return (value - upper) * (value - lower) <= 0;
 }

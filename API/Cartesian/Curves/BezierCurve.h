@@ -19,6 +19,7 @@ namespace API
 
 				void _setPoints(API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>);
 				float _distanceToPoint(API::Cartesian::Point2D<float>);
+				bool _valueInToleranceRangeFrom(float, float, float);
 			public:
 				BezierCurve();
 				BezierCurve(API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>);
