@@ -30,13 +30,13 @@
     <ClInclude Include="Cartesian\Vector3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Graphic\Color.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Cartesian\Curves\BezierCurve.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Cartesian\Point2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic\Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,5 +47,8 @@
     <ClCompile Include="Cartesian\Curves\BezierCurve.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -25,7 +25,7 @@ namespace API
 				BezierCurve(API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>);
 				BezierCurve** DivideInTwo(float);
 				// Podzial na mniejsze odcinki o minimalnej dlugosci. Drugi parametr przechowuje liczbe odcinkow.
-				API::Cartesian::Point2D<float>* Subdivide(float, unsigned*);
+				std::vector<API::Cartesian::Point2D<float>*> Subdivide(float, unsigned*);
 				API::Cartesian::Point2D<float> GetEnd() const;
 				API::Cartesian::Point2D<float> GetStart() const;
 			};

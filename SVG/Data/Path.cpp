@@ -1,10 +1,8 @@
 #include "Path.h"
 SVG::Data::Path::Path()
 {
-	_pointCount = 0;
-	_indexCount = 0;
-	_indices = 0;
-	_points = 0;
+	_indices.clear();
+	_points.clear();
 }
 SVG::Data::Path::Path(NSVGpath* originalPath)
 {
@@ -12,10 +10,8 @@ SVG::Data::Path::Path(NSVGpath* originalPath)
 	{
 		return;
 	}
-	_pointCount = 0;
-	_indexCount = 0;
-	_indices = 0;
-	_points = 0;
+	_indices.clear();
+	_points.clear();
 
 	API::Cartesian::Point2D<float>* points = 0;
 	for (int i = 0; i < originalPath->npts - 1; i += 3)
@@ -27,7 +23,7 @@ SVG::Data::Path::Path(NSVGpath* originalPath)
 			API::Cartesian::Point2D<float>(points[4], points[5]),
 			API::Cartesian::Point2D<float>(points[6], points[7]));
 		unsigned resultCount = 0;
-		API::Cartesian::Point2D<float>* resultPoints = curve.Subdivide(1.0f, &resultCount);
+		std::vector<API::Cartesian::Point2D<float>*> resultPoints = curve.Subdivide(1.0f, &resultCount);
 		for (unsigned j = 0; j < resultCount; j++)
 		{
 			_addPointAndIndex(resultPoints[j]);
@@ -35,15 +31,15 @@ SVG::Data::Path::Path(NSVGpath* originalPath)
 	}
 }
 
-void SVG::Data::Path::_addPointAndIndex(API::Cartesian::Point2D<float> point)
+void SVG::Data::Path::_addPointAndIndex(API::Cartesian::Point2D<float>* point)
 {
-	if (_indices == nullptr || _points == nullptr || _indexCount == 0 || _pointCount == 0)
+	if (_indices.empty() || _points.empty() || _indexCount == 0 || _pointCount == 0)
 	{
-		_indices = (unsigned*)malloc(sizeof(unsigned));
-		_indices[0] = 0;
+		_indices.clear();
+		_indices.push_back(0);
 		_indexCount = 1;
-		_points = (API::Cartesian::Point2D<float>*)malloc(sizeof(API::Cartesian::Point2D<float>));
-		_points[0] = point;
+		_points.clear();
+		_points.push_back(point);
 		_pointCount = 1;
 		return;
 	}
@@ -51,13 +47,12 @@ void SVG::Data::Path::_addPointAndIndex(API::Cartesian::Point2D<float> point)
 	{
 		if (_points[_indices[i]] == point)
 		{
-			_indices = (unsigned*)realloc(_indices, ++_indexCount * sizeof(unsigned));
-			_indices[_indexCount - 1] = i;
+			_indices.push_back(i);
+			_indexCount++;
 			return;
 		}
 	}
-	_indices = (unsigned*)realloc(_indices, ++_indexCount * sizeof(unsigned));
-	_indices[_indexCount - 1] = _pointCount;
-	_points = (API::Cartesian::Point2D<float>*)realloc(_points, ++_pointCount * sizeof(API::Cartesian::Point2D<float>));
-	_points[_pointCount - 1] = point;
+	_indices.push_back(_indexCount++);
+	_points.push_back(point);
+	_pointCount++;
 }

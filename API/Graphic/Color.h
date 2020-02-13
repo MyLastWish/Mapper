@@ -1,5 +1,6 @@
 #ifndef COLOR_H
 #define COLOR_H
+#include <glm/glm.hpp>
 namespace API
 {
 	namespace Graphic
@@ -25,6 +26,7 @@ namespace API
 			Color(float, float, float, float = 1.0f);
 			Color(double, double, double, double = 1.0);
 			void Set(unsigned, unsigned, unsigned, unsigned = 255);
+			glm::vec4 ToVec4();
 		};
 	}
 }

@@ -19,9 +19,9 @@ void API::Cartesian::Curves::BezierCurve::_setPoints(API::Cartesian::Point2D<flo
 	_end = end;
 }
 
-API::Cartesian::Point2D<float>* API::Cartesian::Curves::BezierCurve::Subdivide(float minimalLength, unsigned* count)
+std::vector<API::Cartesian::Point2D<float>*> API::Cartesian::Curves::BezierCurve::Subdivide(float minimalLength, unsigned* count)
 {
-	API::Cartesian::Point2D<float>* results;
+	std::vector<API::Cartesian::Point2D<float>*> results;
 	std::vector<API::Cartesian::Curves::BezierCurve*> curves;
 	curves.push_back(this);
 	unsigned counter = 1;
@@ -53,11 +53,10 @@ API::Cartesian::Point2D<float>* API::Cartesian::Curves::BezierCurve::Subdivide(f
 			curves.push_back(curvesToBeAdded[i]);
 		}
 	} while (!completed);
-	results = (API::Cartesian::Point2D<float>*)malloc(counter * sizeof(API::Cartesian::Point2D<float>) + 1);
-	results[0] = curves[0]->GetStart();
+	results.push_back(new API::Cartesian::Point2D<float>(curves[0]->GetStart()));
 	for (unsigned i = 0; i < counter; i++)
 	{
-		results[i + 1] = curves[i]->GetEnd();
+		results.push_back(new API::Cartesian::Point2D<float>(curves[i]->GetEnd()));
 	}
 	*count = counter;
 	return results;
