@@ -19,7 +19,8 @@ namespace Graphic
 			GLuint _vbo = 0;
 			GLuint _ebo = 0;
 			std::vector<unsigned> _indices;
-			std::vector<T> _readyCoords;
+			std::vector<T> _coords;
+			std::vector<API::Cartesian::Vector3D<T>> _normals;
 			API::Graphic::Color _color;
 			unsigned _pointCount = 0;
 			unsigned _indexCount = 0;
@@ -39,7 +40,7 @@ namespace Graphic
 				glGenBuffers(1, &_ebo);
 				glBindVertexArray(_vao);
 				glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-				glBufferData(GL_ARRAY_BUFFER, _readyCoords.size() * sizeof(3 * sizeof(T)), &_readyCoords[0], GL_STATIC_DRAW);
+				glBufferData(GL_ARRAY_BUFFER, _coords.size() * sizeof(3 * sizeof(T)), &_coords[0], GL_STATIC_DRAW);
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
 				glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indices.size() * sizeof(unsigned), &_indices[0], GL_STATIC_DRAW);
 				glEnableVertexAttribArray(0);
@@ -54,12 +55,25 @@ namespace Graphic
 			{
 				for (int i = 0; i < indices.size(); i++)
 				{
-					_readyCoords.push_back(points[indices[i]]->GetX());
-					_readyCoords.push_back(points[indices[i]]->GetY());
-					_readyCoords.push_back(0);
+					_coords.push_back(points[indices[i]]->GetX());
+					_coords.push_back(points[indices[i]]->GetY());
+					_coords.push_back(0);
+					_normals.push_back(API::Cartesian::Vector3D<T>((T)0.0f, (T)0.0f, (T)1.0f));
 					_pointCount++;
 				}
 			}
+			Drawable(std::vector<API::Cartesian::Point3D<T>*> points, std::vector<unsigned> indices, std::vector<API::Cartesian::Vector3D<T>> normals)
+			{
+				for (int i = 0; i < indices.size(); i++)
+				{
+					_coords.push_back(points[indices[i]]->GetX());
+					_coords.push_back(points[indices[i]]->GetY());
+					_coords.push_back(points[indices[i]]->GetZ());
+					_normals.push_back(normals[i]);
+					_pointCount++;
+				}
+			}
+
 			void Draw(Graphic::Shader* shader)
 			{
 				if (shader == nullptr)

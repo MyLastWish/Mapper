@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "Callbacks.h"
 #include "Data/Image.h"
+#include "Mesh.h"
 int _glfwInitialize(GLFWwindow*& window)
 {
 	glfwInit();

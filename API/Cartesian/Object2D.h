@@ -1,5 +1,6 @@
 #ifndef OBJECT2D_H
 #define OBJECT2D_H
+#include <vector>
 namespace API
 {
 	namespace Cartesian
@@ -28,6 +29,10 @@ namespace API
 			virtual bool operator!=(const Object2D& other)
 			{
 				return _x != other.GetX() || _y != other.GetY();
+			}
+			virtual std::vector<T> GetCoordsInArray()
+			{
+				return std::vector<T> {_x, _y};
 			}
 		};
 	}
