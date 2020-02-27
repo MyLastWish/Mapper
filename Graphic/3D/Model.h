@@ -6,12 +6,12 @@ namespace Graphic
 {
 	namespace Graphic3D
 	{
-		class Model : public DrawableContainer<Mesh*>
+		class Model : public DrawableContainer<Mesh>
 		{
 		public:
 			Model();
-			Model(std::vector<Mesh*>);
-			Model(Mesh*);
+			Model(std::vector<Mesh*>, unsigned);
+			Model(Mesh);
 		};
 	}
 }

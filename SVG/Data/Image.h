@@ -2,6 +2,8 @@
 #define SVG_IMAGE_H
 #include <vector>
 #include "Shape.h"
+#include "3D/Model.h"
+#include "3D/Mesh.h"
 namespace SVG
 {
 	namespace Data
@@ -10,12 +12,13 @@ namespace SVG
 		{
 		private:
 			char* _sourcePath = 0;
-			SVG::Data::Shape** _shapes;
+			std::vector<SVG::Data::Shape*> _shapes;
 			unsigned _shapeCount;
+			void _addShape(SVG::Data::Shape*);
 		public:
 			Image();
 			Image(const char*);
-			void _addShape(SVG::Data::Shape*);
+			Graphic::Graphic3D::Model* To3DModel();
 		};
 	}
 }

@@ -34,3 +34,12 @@ void SVG::Data::Shape::_addPath(SVG::Data::Path* path)
 	_paths = (SVG::Data::Path**)realloc(_paths, ++_pathCount * sizeof(SVG::Data::Path));
 	_paths[_pathCount - 1] = path;
 }
+std::vector<Graphic::Graphic3D::Mesh*> SVG::Data::Shape::ToMeshes()
+{
+	std::vector<Graphic::Graphic3D::Mesh*> meshes;
+	for (int i = 0; i < _pathCount; i++)
+	{
+		meshes.push_back(_paths[i]->ToMesh());
+	}
+	return meshes;
+}

@@ -2,8 +2,8 @@
 SVG::Data::Image::Image()
 {
 	_shapeCount = 0;
-	_shapes = 0;
 	_sourcePath = 0;
+	_shapes.clear();
 }
 
 SVG::Data::Image::Image(const char* path) : Image()
@@ -22,6 +22,21 @@ SVG::Data::Image::Image(const char* path) : Image()
 
 void SVG::Data::Image::_addShape(SVG::Data::Shape* shape)
 {
-	_shapes = (SVG::Data::Shape**)realloc(_shapes, ++_shapeCount * sizeof(SVG::Data::Shape*));
-	_shapes[_shapeCount - 1] = shape;
+	_shapes.push_back(shape);
+	_shapeCount++;
+}
+
+Graphic::Graphic3D::Model* SVG::Data::Image::To3DModel()
+{
+	std::vector<Graphic::Graphic3D::Mesh*> meshes;
+	for (unsigned i = 0; i < _shapeCount; i++)
+	{
+		std::vector<Graphic::Graphic3D::Mesh*> retreivedMeshes;
+		retreivedMeshes = _shapes[i]->ToMeshes();
+		for (unsigned j = 0; j < retreivedMeshes.size(); j++)
+		{
+			meshes.push_back(retreivedMeshes[j]);
+		}
+	}
+	return new Graphic::Graphic3D::Model(meshes, meshes.size()); // TODO: Poprawic metode liczenia mesh.
 }

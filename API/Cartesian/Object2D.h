@@ -12,7 +12,7 @@ namespace API
 			T _x;
 			T _y;
 		public:
-			Object2D();
+			Object2D() {};
 			Object2D(T x, T y) { SetCoords2D(x, y); }
 			void SetCoords2D(T x, T y)
 			{

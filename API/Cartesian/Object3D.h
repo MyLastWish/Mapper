@@ -11,6 +11,10 @@ namespace API
 		private:
 			T _z;
 		public:
+			Object3D()
+			{
+				SetCoords3D((T)0.0f, (T)0.0f, (T)0.0f);
+			}
 			Object3D(T x, T y, T z)
 			{
 				SetCoords3D(x, y, z);

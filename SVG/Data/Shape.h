@@ -2,6 +2,7 @@
 #define SVG_SHAPE_H
 #include "Path.h"
 #include "Graphic/Color.h"
+#include "3D/Mesh.h"
 namespace SVG
 {
 	namespace Data
@@ -20,6 +21,7 @@ namespace SVG
 		public:
 			Shape();
 			Shape(NSVGshape*);
+			std::vector<Graphic::Graphic3D::Mesh*> ToMeshes();
 		};
 	}
 }

@@ -43,12 +43,13 @@ int main()
 	//Processors::InputProcessor proc = Processors::InputProcessor(window);
 	SVG::Data::Image* image = new SVG::Data::Image("D:\\Downloads\\rectangles.svg");
 	Graphic::Shader* basicShader = new Graphic::Shader("C:\\Users\\Adam\\source\\repos\\MyLastWish\\SvgMapper\\SvgMapper\\basicShader.vert", "C:\\Users\\Adam\\source\\repos\\MyLastWish\\SvgMapper\\SvgMapper\\basicShader.frag");
+	Graphic::Graphic3D::Model* model = image->To3DModel();
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.1f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		// proc.Process();
-		//image->Draw(basicShader);
+		model->Draw(basicShader);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}

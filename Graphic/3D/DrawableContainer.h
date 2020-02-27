@@ -8,10 +8,10 @@ namespace Graphic
 {
 	namespace Graphic3D
 	{
-		template <class C, typename uT = float> // uT - typ wewnetrzny szablonu klasy C.
+		template <class C, typename uT = float> // uT - typ wewnetrzny szablonu klasy C (C musi dzedziczyc po Drawable).
 		class DrawableContainer
 		{
-			static_assert(std::is_base_of<Graphic::Graphic3D::Drawable, C>, "Class C must derive from Drawable");
+			static_assert(std::is_base_of<Graphic::Graphic3D::Drawable<uT>, C>::value, "Class C must derive from Drawable");
 		private:
 			std::vector<C*> _contents;
 			unsigned _count = 0;
@@ -20,6 +20,13 @@ namespace Graphic
 			{
 				_contents.clear();
 				_count = 0;
+			}
+			DrawableContainer(std::vector<C> vec, unsigned count) : DrawableContainer()
+			{
+				for (int i = 0; i < count; i++)
+				{
+					Add(new C(vec[i]));
+				}
 			}
 			DrawableContainer(std::vector<C*> vec, unsigned count) : DrawableContainer()
 			{

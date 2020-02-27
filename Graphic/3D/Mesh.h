@@ -14,6 +14,8 @@ namespace Graphic
 	{
 		class Mesh : public Drawable<float>
 		{
+		private:
+			void _prepare() override;
 		public:
 			Mesh(aiMesh*, const aiScene*);
 			Mesh(std::vector<API::Cartesian::Point2D<float>*>, std::vector<unsigned>);

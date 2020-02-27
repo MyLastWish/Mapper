@@ -56,3 +56,7 @@ void SVG::Data::Path::_addPointAndIndex(API::Cartesian::Point2D<float>* point)
 	_points.push_back(point);
 	_pointCount++;
 }
+Graphic::Graphic3D::Mesh* SVG::Data::Path::ToMesh()
+{
+	return new Graphic::Graphic3D::Mesh(_points, _indices);
+}
