@@ -36,6 +36,12 @@
     <ClInclude Include="3D\DrawableContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="3D\Line.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3D\Infos\LineInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -45,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="3D\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3D\Line.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

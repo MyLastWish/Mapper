@@ -18,7 +18,20 @@ namespace API
 			}
 			void Move(Vector3D<T>& vector)
 			{
-				SetCoords3D(this->_x - vector.GetX(), this->_y - vector.GetY(), this->_z - vector.GetZ());
+				SetCoords3D(this->_x + vector.GetX(), this->_y + vector.GetY(), this->_z + vector.GetZ());
+			}
+			void Move(Vector3D<T>* vector)
+			{
+				Move(*vector);
+			}
+			Point3D<T> GetMovedCopy(Vector3D<T>& vector)
+			{
+				return Point3D<T>(this->_x + vector.GetX(), this->_y + vector.GetY(), this->_z + vector.GetZ());
+			}
+
+			Point3D<T> GetMovedCopy(Vector3D<T>* vector)
+			{
+				return GetMovedCopy(*vector);
 			}
 		};
 	}

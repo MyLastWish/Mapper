@@ -8,7 +8,7 @@ namespace API
 		template <typename T = float>
 		class Object3D : public Object2D<T>
 		{
-		private:
+		protected:
 			T _z;
 		public:
 			Object3D()
