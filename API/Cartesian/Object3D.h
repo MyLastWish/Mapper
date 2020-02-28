@@ -5,31 +5,16 @@ namespace API
 {
 	namespace Cartesian
 	{
-		template <typename T = float>
-		class Object3D : public Object2D<T>
+		class Object3D : public Object2D
 		{
 		protected:
-			T _z;
+			float _z;
 		public:
-			Object3D()
-			{
-				SetCoords3D((T)0.0f, (T)0.0f, (T)0.0f);
-			}
-			Object3D(T x, T y, T z)
-			{
-				SetCoords3D(x, y, z);
-			}
-			virtual T GetZ() const { return _z; }
-			void SetCoords3D(T x, T y, T z)
-			{
-				this->_x = x;
-				this->_y = y;
-				this->_z = z;
-			}
-			std::vector<T> GetCoordsInArray() override
-			{
-				return std::vector<T> {this->_x, this->_y, this->_z};
-			}
+			Object3D();
+			Object3D(float x, float y, float z);
+			virtual float GetZ() const;
+			void SetCoords3D(float x, float y, float z);
+			std::vector<float> GetCoordsInArray() override;
 		};
 	}
 }

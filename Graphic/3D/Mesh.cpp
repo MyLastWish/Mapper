@@ -3,7 +3,7 @@ Graphic::Graphic3D::Mesh::Mesh(aiMesh* mesh, const aiScene* scene) : Drawable()
 {
 	std::vector<float> points;
 	std::vector<unsigned> indices;
-	std::vector<API::Cartesian::Vector3D<float>> normals;
+	std::vector<API::Cartesian::Vector3D> normals;
 
 	for (unsigned i = 0; i < mesh->mNumVertices; i++)
 	{
@@ -11,7 +11,7 @@ Graphic::Graphic3D::Mesh::Mesh(aiMesh* mesh, const aiScene* scene) : Drawable()
 		points.push_back(mesh->mVertices[i].x);
 		points.push_back(mesh->mVertices[i].y);
 		points.push_back(mesh->mVertices[i].z);
-		normals.push_back(API::Cartesian::Vector3D<float>(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
+		normals.push_back(API::Cartesian::Vector3D(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z));
 		_coordCount += 3;
 	}
 	// przetwarzanie indeksow
@@ -29,16 +29,16 @@ Graphic::Graphic3D::Mesh::Mesh(aiMesh* mesh, const aiScene* scene) : Drawable()
 	_normals = normals;
 }
 
-Graphic::Graphic3D::Mesh::Mesh(std::vector<API::Cartesian::Point2D<float>*> points, std::vector<unsigned> indices) : Drawable(points, indices)
+Graphic::Graphic3D::Mesh::Mesh(std::vector<API::Cartesian::Point2D*> points, std::vector<unsigned> indices) : Drawable(points, indices)
 {
 	_normals.clear();
 	for (int i = 0; i < _indexCount; i++)
 	{
-		_normals.push_back(API::Cartesian::Vector3D<float>(0.0f, 0.0f, 1.0f));
+		_normals.push_back(API::Cartesian::Vector3D(0.0f, 0.0f, 1.0f));
 	}
 }
 
-Graphic::Graphic3D::Mesh::Mesh(std::vector<API::Cartesian::Point3D<float>*> points, std::vector<unsigned> indices, std::vector<API::Cartesian::Vector3D<float>> normals) : Drawable(points, indices, normals)
+Graphic::Graphic3D::Mesh::Mesh(std::vector<API::Cartesian::Point3D*> points, std::vector<unsigned> indices, std::vector<API::Cartesian::Vector3D> normals) : Drawable(points, indices, normals)
 {
 }
 void Graphic::Graphic3D::Mesh::_prepare()

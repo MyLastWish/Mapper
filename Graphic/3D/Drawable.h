@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "Cartesian/Point3D.h"
 #include "Cartesian/Point2D.h"
+#include "Cartesian/Vector3D.h"
 #include "Graphic/Color.h"
 #include <vector>
 #include <glm/glm.hpp>
@@ -11,7 +12,6 @@ namespace Graphic
 {
 	namespace Graphic3D
 	{
-		template <typename T = float>
 		class Drawable
 		{
 		protected:
@@ -19,8 +19,8 @@ namespace Graphic
 			GLuint _vbo = 0;
 			GLuint _ebo = 0;
 			std::vector<unsigned> _indices;
-			std::vector<T> _coords;
-			std::vector<API::Cartesian::Vector3D<T>> _normals;
+			std::vector<float> _coords;
+			std::vector<API::Cartesian::Vector3D> _normals;
 			API::Graphic::Color _color;
 			unsigned _coordCount = 0;
 			unsigned _indexCount = 0;
@@ -50,24 +50,23 @@ namespace Graphic
 			}
 			void _invalidate() { _readyToDraw = false; }
 			void _validate() { _readyToDraw = true; }
-			template <typename T>
-			friend void copyDrawables(Drawable<T>* original, Drawable<T>* copy);
+			friend void copyDrawables(Drawable* original, Drawable* copy);
 		public:
 			Drawable() {}
-			Drawable(std::vector<API::Cartesian::Point2D<T>*> points, std::vector<unsigned> indices)
+			Drawable(std::vector<API::Cartesian::Point2D*> points, std::vector<unsigned> indices)
 			{
 				for (int i = 0; i < indices.size(); i++)
 				{
 					_coords.push_back(points[indices[i]]->GetX());
 					_coords.push_back(points[indices[i]]->GetY());
 					_coords.push_back(0);
-					_normals.push_back(API::Cartesian::Vector3D<T>((T)0.0f, (T)0.0f, (T)1.0f));
+					_normals.push_back(API::Cartesian::Vector3D(0.0f, 0.0f, 1.0f));
 					_coordCount += 3;
 				}
 				_indices = indices;
 				_indexCount = _coordCount / 3u;
 			}
-			Drawable(std::vector<API::Cartesian::Point3D<T>*> points, std::vector<unsigned> indices, std::vector<API::Cartesian::Vector3D<T>> normals)
+			Drawable(std::vector<API::Cartesian::Point3D*> points, std::vector<unsigned> indices, std::vector<API::Cartesian::Vector3D> normals)
 			{
 				for (int i = 0; i < indices.size(); i++)
 				{
@@ -104,8 +103,7 @@ namespace Graphic
 				_validate();
 			}
 		};
-		template <typename T = float>
-		void copyDrawables(Drawable<T>* original, Drawable<T>* copy)
+		void copyDrawables(Drawable* original, Drawable* copy)
 		{
 			copy->_color = original->_color;
 			copy->_coordCount = original->_coordCount;

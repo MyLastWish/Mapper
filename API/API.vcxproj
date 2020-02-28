@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir)API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -88,7 +88,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir)API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -102,7 +102,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir)API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,7 +118,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir)API;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,10 +134,20 @@
     <ClInclude Include="Cartesian\Point3D.h" />
     <ClInclude Include="Cartesian\Vector2D.h" />
     <ClInclude Include="Cartesian\Vector3D.h" />
+    <ClInclude Include="Data\Vec2.h" />
+    <ClInclude Include="Data\Vec3.h" />
     <ClInclude Include="Graphic\Color.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cartesian\Curves\BezierCurve.cpp" />
+    <ClCompile Include="Cartesian\Object2D.cpp" />
+    <ClCompile Include="Cartesian\Object3D.cpp" />
+    <ClCompile Include="Cartesian\Point2D.cpp" />
+    <ClCompile Include="Cartesian\Point3D.cpp" />
+    <ClCompile Include="Cartesian\Vector2D.cpp" />
+    <ClCompile Include="Cartesian\Vector3D.cpp" />
+    <ClCompile Include="Data\Vec2.cpp" />
+    <ClCompile Include="Data\Vec3.cpp" />
     <ClCompile Include="Graphic\Color.cpp" />
   </ItemGroup>
   <ItemGroup>

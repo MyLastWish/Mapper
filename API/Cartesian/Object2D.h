@@ -5,35 +5,20 @@ namespace API
 {
 	namespace Cartesian
 	{
-		template <typename T = float>
 		class Object2D
 		{
 		protected:
-			T _x;
-			T _y;
+			float _x;
+			float _y;
 		public:
-			Object2D() {};
-			Object2D(T x, T y) { SetCoords2D(x, y); }
-			void SetCoords2D(T x, T y)
-			{
-				_x = x;
-				_y = y;
-			}
-			virtual T GetX() const { return _x; }
-			virtual T GetY() const { return _y; }
-			virtual bool operator==(const Object2D& other)
-			{
-				return _x == other.GetX() && _y == other.GetY();
-			}
-
-			virtual bool operator!=(const Object2D& other)
-			{
-				return _x != other.GetX() || _y != other.GetY();
-			}
-			virtual std::vector<T> GetCoordsInArray()
-			{
-				return std::vector<T> {_x, _y};
-			}
+			Object2D();
+			Object2D(float x, float y);
+			void SetCoords2D(float x, float y);
+			virtual float GetX() const;
+			virtual float GetY() const;
+			virtual bool operator==(const Object2D&);
+			virtual bool operator!=(const Object2D&);
+			virtual std::vector<float> GetCoordsInArray();
 		};
 	}
 }

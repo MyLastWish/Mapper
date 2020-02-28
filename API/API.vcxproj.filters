@@ -39,12 +39,42 @@
     <ClInclude Include="Cartesian\Point3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Data\Vec3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\Vec2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphic\Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Cartesian\Curves\BezierCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cartesian\Object2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cartesian\Object3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cartesian\Point2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cartesian\Point3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cartesian\Vector2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cartesian\Vector3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\Vec3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\Vec2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

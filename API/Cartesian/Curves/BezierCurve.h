@@ -12,22 +12,22 @@ namespace API
 			class BezierCurve
 			{
 			private:
-				API::Cartesian::Point2D<float> _start;
-				API::Cartesian::Point2D<float> _firstControlPoint;
-				API::Cartesian::Point2D<float> _secondControlPoint;
-				API::Cartesian::Point2D<float> _end;
+				API::Cartesian::Point2D _start;
+				API::Cartesian::Point2D _firstControlPoint;
+				API::Cartesian::Point2D _secondControlPoint;
+				API::Cartesian::Point2D _end;
 
-				void _setPoints(API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>);
-				float _distanceToPoint(API::Cartesian::Point2D<float>);
+				void _setPoints(API::Cartesian::Point2D, API::Cartesian::Point2D, API::Cartesian::Point2D, API::Cartesian::Point2D);
+				float _distanceToPoint(API::Cartesian::Point2D);
 				bool _valueInToleranceRangeFrom(float, float, float);
 			public:
 				BezierCurve();
-				BezierCurve(API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>, API::Cartesian::Point2D<float>);
+				BezierCurve(API::Cartesian::Point2D, API::Cartesian::Point2D, API::Cartesian::Point2D, API::Cartesian::Point2D);
 				BezierCurve** DivideInTwo(float);
 				// Podzial na mniejsze odcinki o minimalnej dlugosci. Drugi parametr przechowuje liczbe odcinkow.
-				std::vector<API::Cartesian::Point2D<float>*> Subdivide(float, unsigned*);
-				API::Cartesian::Point2D<float> GetEnd() const;
-				API::Cartesian::Point2D<float> GetStart() const;
+				std::vector<API::Cartesian::Point2D*> Subdivide(float, unsigned*);
+				API::Cartesian::Point2D GetEnd() const;
+				API::Cartesian::Point2D GetStart() const;
 			};
 		}
 	}

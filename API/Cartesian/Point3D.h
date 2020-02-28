@@ -1,38 +1,22 @@
 #ifndef POINT3D_H
 #define POINT3D_H
-#include "Vector3D.h"
+#include "Data/Vec3.h"
+#include "Object3D.h"
 namespace API
 {
 	namespace Cartesian
 	{
-		template <typename T> class Vector3D;
-		template <typename T = float>
-		class Point3D : public Object3D<T>
+		class Point3D : public Object3D
 		{
 		public:
-			Point3D<T>() : Object3D<T>()
-			{
-			}
-			Point3D<T>(T x, T y, T z) : Object3D<T>(x, y, z)
-			{
-			}
-			void Move(Vector3D<T>& vector)
-			{
-				SetCoords3D(this->_x + vector.GetX(), this->_y + vector.GetY(), this->_z + vector.GetZ());
-			}
-			void Move(Vector3D<T>* vector)
-			{
-				Move(*vector);
-			}
-			Point3D<T> GetMovedCopy(Vector3D<T>& vector)
-			{
-				return Point3D<T>(this->_x + vector.GetX(), this->_y + vector.GetY(), this->_z + vector.GetZ());
-			}
-
-			Point3D<T> GetMovedCopy(Vector3D<T>* vector)
-			{
-				return GetMovedCopy(*vector);
-			}
+			Point3D();
+			Point3D(float x, float y, float z);
+			void Move(API::Data::Vec3& vector);
+			void Move(API::Data::Vec3* vector);
+			Point3D GetMovedCopy(API::Data::Vec3& vector);
+			Point3D GetMovedCopy(API::Data::Vec3* vector);
+			Point3D* GetMovedCopyPtr(API::Data::Vec3& vector);
+			Point3D* GetMovedCopyPtr(API::Data::Vec3* vector);
 		};
 	}
 }

@@ -8,72 +8,36 @@ namespace API
 {
 	namespace Cartesian
 	{
-		template <typename T> class Point2D;
+		class Point2D;
 		enum Direction
 		{
 			LEFT,
 			RIGHT
 		};
-		template <typename T = float>
-		class Vector2D : public Object2D<T>
+		class Vector2D : public Object2D
 		{
 		private:
-			API::Cartesian::Point2D<T> _start;
-			API::Cartesian::Point2D<T> _end;
+			API::Cartesian::Point2D _start;
+			API::Cartesian::Point2D _end;
 
 		public:
-			Vector2D() : Object2D<T>((T)0.0f, (T)0.0f) {}
-			Vector2D(const Vector2D<T>& original) : Object2D<T>((T)0.0f, (T)0.0f) { SetPoints(original.GetStart(), original.GetEnd()); }
-			Vector2D(T x, T y) : Object2D<T>(x, y) { SetCoords2D(x, y); }
-			Vector2D(API::Cartesian::Point2D<T> start, API::Cartesian::Point2D<T> end) : Object2D<T>((T)0.0f, (T)0.0f) { _start = start; _end = end; }
-			T GetX() { return _end.GetX() - _start.GetX(); }
-			T GetY() { return _end.GetY() - _start.GetY(); }
-			T GetLength() const { return std::sqrt(std::pow(this->_x, 2) + std::pow(this->_y, 2)); }
-			API::Cartesian::Point2D<T> GetStart() const { return _start; }
-			API::Cartesian::Point2D<T> GetEnd() const { return _end; }
-			void MoveStart(Vector2D<T> vec)
-			{
-				_start.Move(vec);
-			}
-			void MoveEnd(Vector2D<T> vec)
-			{
-				_end.Move(vec);
-			}
-			void SetPoints(API::Cartesian::Point2D<T> start, API::Cartesian::Point2D<T> end)
-			{
-				_start = start;
-				_end = end;
-			}
-			Vector2D* GetPerpendicularCopy(Direction dir)
-			{
-				Vector2D<T>* copy = *this;
-				Vector2D<T> crossResult;
-				Vector2D<T> planarVector = Vector2D<T>((T)0.0f, (T)0.0f, (T)1.0f);
-				if (dir == Direction::RIGHT)
-				{
-					planarVector.Invert();
-				}
-				//crossResult = _crossProduct(copy, planarVector);
-				return crossResult;
-			}
-			Vector2D* GetMultipliedCopy(float factor)
-			{
-				Vector2D* copy = new Vector2D<T>((*this));
-				copy.MoveEnd(Vector2D<T>((T)copy.GetX() * (T)(1.0f - factor), (T)copy.GetY() * (T)(1.0f - factor)));
-			}
-			void Invert()
-			{
-				SetPoints(_end, _start);
-			}
-			Vector2D<T>& operator=(const Vector2D<T>& original)
-			{
-				this->SetPoints(original.GetStart(), original.GetEnd());
-				return *this;
-			}
-			T DotProduct(Vector2D<T>& other)
-			{
-				return GetX() * other.GetX() + GetY() * other.GetY();
-			}
+			Vector2D();
+			Vector2D(const Vector2D& original);
+			Vector2D(float x, float y);
+			Vector2D(API::Cartesian::Point2D start, API::Cartesian::Point2D end);
+			float GetX() const;
+			float GetY() const;
+			float GetLength() const;
+			API::Cartesian::Point2D GetStart() const;
+			API::Cartesian::Point2D GetEnd() const;
+			void MoveStart(API::Data::Vec2 vec);
+			void MoveEnd(API::Data::Vec2 vec);
+			void SetPoints(API::Cartesian::Point2D start, API::Cartesian::Point2D end);
+			Vector2D* GetPerpendicularCopy(Direction dir);
+			Vector2D GetMultipliedCopy(float factor);
+			void Invert();
+			Vector2D& operator=(const Vector2D& original);
+			float DotProduct(Vector2D& other);
 		};
 	}
 }

@@ -2,6 +2,7 @@
 #define LINE_INFO_H
 #include "Cartesian/Point3D.h"
 #include "Cartesian/Vector3D.h"
+#include "Data/Vec3.h"
 namespace Graphic
 {
 	namespace Graphic3D
@@ -10,11 +11,11 @@ namespace Graphic
 		{
 			struct LineInfo // Info nt. majacej byc stworzonej sciezki. Istotne jest, ze obiekt linii budowany jest od dolu - wskazane koordynaty odcinka sa w podstawie, a reszta budowana jest wzdloz normalnej.
 			{
-				API::Cartesian::Point3D<float> Start;
-				API::Cartesian::Point3D<float> End;
-				API::Cartesian::Vector3D<float> StartFaceNormal;
-				API::Cartesian::Vector3D<float> EndFaceNormal;
-				API::Cartesian::Vector3D<float> LineNormal;
+				API::Cartesian::Point3D Start;
+				API::Cartesian::Point3D End;
+				API::Data::Vec3 StartFaceNormal;
+				API::Data::Vec3 EndFaceNormal;
+				API::Data::Vec3 LineNormal;
 			};
 		}
 	}

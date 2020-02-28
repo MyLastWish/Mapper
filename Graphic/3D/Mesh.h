@@ -12,14 +12,14 @@ namespace Graphic
 {
 	namespace Graphic3D
 	{
-		class Mesh : public Drawable<float>
+		class Mesh : public Drawable
 		{
 		private:
 			void _prepare() override;
 		public:
 			Mesh(aiMesh*, const aiScene*);
-			Mesh(std::vector<API::Cartesian::Point2D<float>*>, std::vector<unsigned>);
-			Mesh(std::vector<API::Cartesian::Point3D<float>*>, std::vector<unsigned>, std::vector<API::Cartesian::Vector3D<float>>);
+			Mesh(std::vector<API::Cartesian::Point2D*>, std::vector<unsigned>);
+			Mesh(std::vector<API::Cartesian::Point3D*>, std::vector<unsigned>, std::vector<API::Cartesian::Vector3D>);
 		};
 	}
 }
