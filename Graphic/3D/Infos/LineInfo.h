@@ -12,10 +12,9 @@ namespace Graphic
 			struct LineInfo // Info nt. majacej byc stworzonej sciezki. Istotne jest, ze obiekt linii budowany jest od dolu - wskazane koordynaty odcinka sa w podstawie, a reszta budowana jest wzdloz normalnej.
 			{
 				API::Cartesian::Point3D Start;
-				API::Cartesian::Point3D End;
+				float Length;
 				API::Data::Vec3 StartFaceNormal;
 				API::Data::Vec3 EndFaceNormal;
-				API::Data::Vec3 LineNormal;
 			};
 		}
 	}

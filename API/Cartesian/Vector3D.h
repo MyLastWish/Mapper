@@ -30,7 +30,9 @@ namespace API
 			API::Cartesian::Point3D GetEnd() const;
 			Vector3D& operator=(const Vector3D& original);
 			Vector3D* FindPerpendicular(Vector3D normal);
-			Vector3D* GetInvertedCopy();
+			Vector3D GetInvertedCopy();
+			Vector3D* GetInvertedCopyPtr();
+			API::Data::Vec3 GetVectorCoords() const;
 		};
 	}
 }

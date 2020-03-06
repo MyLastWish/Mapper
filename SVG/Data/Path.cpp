@@ -13,17 +13,17 @@ SVG::Data::Path::Path(NSVGpath* originalPath)
 	_indices.clear();
 	_points.clear();
 
-	API::Cartesian::Point2D<float>* points = 0;
+	API::Cartesian::Point2D* points = 0;
 	for (int i = 0; i < originalPath->npts - 1; i += 3)
 	{
 		float* points = &(originalPath->pts[i * 2]);
 		API::Cartesian::Curves::BezierCurve curve = API::Cartesian::Curves::BezierCurve(
-			API::Cartesian::Point2D<float>(points[0], points[1]),
-			API::Cartesian::Point2D<float>(points[2], points[3]),
-			API::Cartesian::Point2D<float>(points[4], points[5]),
-			API::Cartesian::Point2D<float>(points[6], points[7]));
+			API::Cartesian::Point2D(points[0], points[1]),
+			API::Cartesian::Point2D(points[2], points[3]),
+			API::Cartesian::Point2D(points[4], points[5]),
+			API::Cartesian::Point2D(points[6], points[7]));
 		unsigned resultCount = 0;
-		std::vector<API::Cartesian::Point2D<float>*> resultPoints = curve.Subdivide(1.0f, &resultCount);
+		std::vector<API::Cartesian::Point2D*> resultPoints = curve.Subdivide(1.0f, &resultCount);
 		for (unsigned j = 0; j < resultCount; j++)
 		{
 			_addPointAndIndex(resultPoints[j]);
@@ -31,7 +31,7 @@ SVG::Data::Path::Path(NSVGpath* originalPath)
 	}
 }
 
-void SVG::Data::Path::_addPointAndIndex(API::Cartesian::Point2D<float>* point)
+void SVG::Data::Path::_addPointAndIndex(API::Cartesian::Point2D* point)
 {
 	if (_indices.empty() || _points.empty() || _indexCount == 0 || _pointCount == 0)
 	{

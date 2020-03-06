@@ -63,6 +63,7 @@ API::Cartesian::Vector2D API::Cartesian::Vector2D::GetMultipliedCopy(float facto
 {
 	API::Cartesian::Vector2D copy = API::Cartesian::Vector2D((*this));
 	copy.MoveEnd(API::Data::Vec2(copy.GetX() * (1.0f - factor), copy.GetY() * (1.0f - factor)));
+	return copy;
 }
 void API::Cartesian::Vector2D::Invert()
 {

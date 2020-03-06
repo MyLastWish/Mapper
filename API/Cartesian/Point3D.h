@@ -11,12 +11,15 @@ namespace API
 		public:
 			Point3D();
 			Point3D(float x, float y, float z);
+			Point3D(API::Data::Vec3&);
 			void Move(API::Data::Vec3& vector);
 			void Move(API::Data::Vec3* vector);
 			Point3D GetMovedCopy(API::Data::Vec3& vector);
 			Point3D GetMovedCopy(API::Data::Vec3* vector);
 			Point3D* GetMovedCopyPtr(API::Data::Vec3& vector);
 			Point3D* GetMovedCopyPtr(API::Data::Vec3* vector);
+			API::Data::Vec3 ToVec3() const;
+			API::Data::Vec3 operator-(const Point3D&);
 		};
 	}
 }

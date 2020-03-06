@@ -1,5 +1,6 @@
 #ifndef VEC3_H
 #define VEC3_H
+#include <math.h>
 #include "Vec2.h"
 namespace API
 {
@@ -19,6 +20,10 @@ namespace API
 			Vec3* GetInvertedCopyPtr();
 			// Zwraca obiekt wektora o przeciwnym zwrocie.
 			Vec3 GetInvertedCopy();
+			float GetLength() const;
+			API::Data::Vec3& operator=(const API::Data::Vec3&);
+			bool operator==(const API::Data::Vec3&);
+			bool operator!=(const API::Data::Vec3&);
 		};
 	}
 }

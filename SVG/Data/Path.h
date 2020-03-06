@@ -13,13 +13,13 @@ namespace SVG
 		{
 		private:
 			std::vector<unsigned> _indices;
-			std::vector<API::Cartesian::Point2D<float>*> _points;
+			std::vector<API::Cartesian::Point2D*> _points;
 			unsigned _indexCount = 0;
 			unsigned _pointCount = 0;
 		public:
 			Path();
 			Path(NSVGpath*);
-			void _addPointAndIndex(API::Cartesian::Point2D<float>*);
+			void _addPointAndIndex(API::Cartesian::Point2D*);
 			Graphic::Graphic3D::Mesh* ToMesh();
 		};
 	}

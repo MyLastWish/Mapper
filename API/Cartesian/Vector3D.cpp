@@ -68,7 +68,16 @@ API::Cartesian::Vector3D& API::Cartesian::Vector3D::operator=(const Vector3D& or
 //		xNormal * zThis - xThis * zNormal,
 //		xThis * yNormal - xNormal * yThis);
 //}
-API::Cartesian::Vector3D* API::Cartesian::Vector3D::GetInvertedCopy()
+API::Cartesian::Vector3D* API::Cartesian::Vector3D::GetInvertedCopyPtr()
 {
 	return new Vector3D(_end, _start);
+}
+API::Cartesian::Vector3D API::Cartesian::Vector3D::GetInvertedCopy()
+{
+	return Vector3D(_end, _start);
+}
+
+API::Data::Vec3 API::Cartesian::Vector3D::GetVectorCoords() const
+{
+	return API::Data::Vec3(_end.GetX() - _start.GetX(), _end.GetY() - _start.GetY(), _end.GetZ() - _start.GetZ());
 }
