@@ -5,6 +5,8 @@
 #include "Callbacks.h"
 #include "Data/Image.h"
 #include "Mesh.h"
+#include "Processors/ViewProcessor.h"
+#include <glm/glm.hpp>
 int _glfwInitialize(GLFWwindow*& window)
 {
 	glfwInit();
@@ -39,16 +41,20 @@ int main()
 	{
 		return initValue;
 	}
-	glfwSetFramebufferSizeCallback(window, Callbacks::ResizeCallback);
 	//Processors::InputProcessor proc = Processors::InputProcessor(window);
+	Graphic::Graphic3D::Camera* mainCamera = new Graphic::Graphic3D::Camera();
+	Graphic::Graphic2D::Cursor* mainCursor = new Graphic::Graphic2D::Cursor();
+	Processors::ViewProcessor* viewProc = new Processors::ViewProcessor(mainCamera, mainCursor, window);
+	glfwSetFramebufferSizeCallback(window, Callbacks::ResizeCallback);
+	glfwSetCursorPosCallback(window, viewProc->MouseCallback);
 	SVG::Data::Image* image = new SVG::Data::Image("D:\\Downloads\\rectangles.svg");
 	Graphic::Shader* basicShader = new Graphic::Shader("C:\\Users\\Adam\\source\\repos\\MyLastWish\\SvgMapper\\SvgMapper\\basicShader.vert", "C:\\Users\\Adam\\source\\repos\\MyLastWish\\SvgMapper\\SvgMapper\\basicShader.frag");
-	Graphic::Graphic3D::Model* model = image->To3DModel();
+	Graphic::Graphic3D::PlanarModel* model = image->ToPlanarModel();
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.1f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		// proc.Process();
+		viewProc->ProcessKeyboardInput();
 		model->Draw(basicShader);
 		glfwSwapBuffers(window);
 		glfwPollEvents();

@@ -3,16 +3,21 @@ Graphic::Graphic3D::Line::Line() : Drawable()
 {
 }
 
-Graphic::Graphic3D::Line::Line(API::Cartesian::Point3D start, float length, float thickness) : Drawable() // TODO: Zmienic sposob rysowania bo jest zbyt zamotany - ma byc staly i modyfikowany macierzami.
+Graphic::Graphic3D::Line::Line(const Graphic::Graphic3D::Line& original) : Drawable()
 {
-	Graphic::Graphic3D::Infos::LineInfo* info = new Graphic::Graphic3D::Infos::LineInfo();
-	info->Start = start;
-	info->EndFaceNormal = start;
-	info->StartFaceNormal = start;
-	_drawAlong(info, 10, 10);
 }
 
-void Graphic::Graphic3D::Line::_drawAlong(Graphic::Graphic3D::Infos::LineInfo* info, float thickness, float width) // TODO: poprawic konsystencje funkcji.
+Graphic::Graphic3D::Line::Line(Graphic::Graphic3D::Infos::LineInfo* info) : Drawable()
+{
+	if (info->Length == 0.0f)
+	{
+		return; // TODO: Dodanie wywalania bledu.
+	}
+	_position = info->Start.ToVec3();
+	_drawAlong(info);
+}
+
+void Graphic::Graphic3D::Line::_drawAlong(Graphic::Graphic3D::Infos::LineInfo* info)
 {
 	std::vector<float> coords;
 	std::vector<unsigned> indices;
@@ -21,12 +26,20 @@ void Graphic::Graphic3D::Line::_drawAlong(Graphic::Graphic3D::Infos::LineInfo* i
 	std::vector<API::Data::Vec3> points;
 	auto addVec3 = [&points, &indices, &iCount, &pCount](API::Data::Vec3 vec)
 	{
+		if (points.empty())
+		{
+			indices.push_back(0);
+			points.push_back(vec);
+			pCount = 1;
+			iCount = 1;
+			return;
+		}
 		bool found = false;
 		for (unsigned i = 0; i < iCount; i++)
 		{
 			if (points[indices[i]] == vec)
 			{
-				indices.push_back(i);
+				indices.push_back(indices[i]);
 				iCount++;
 				found = true;
 				break;
@@ -34,7 +47,9 @@ void Graphic::Graphic3D::Line::_drawAlong(Graphic::Graphic3D::Infos::LineInfo* i
 		}
 		if (!found)
 		{
-			indices.push_back(pCount++);
+			points.push_back(vec);
+			indices.push_back(pCount);
+			pCount++;
 			iCount++;
 		}
 	};
@@ -44,43 +59,59 @@ void Graphic::Graphic3D::Line::_drawAlong(Graphic::Graphic3D::Infos::LineInfo* i
 		addVec3(second);
 		addVec3(third);
 	};
-	auto rebase = [](API::Data::Vec3& vec, API::Cartesian::Point3D oldPoint, API::Cartesian::Point3D newPoint)
+	auto setRectangleFace = [&](Graphic::Graphic3D::Infos::RelativeFaceInfo* info, float height, float width)
 	{
-		API::Data::Vec3 oldPosition = oldPoint.GetMovedCopy(vec).ToVec3();
-		return API::Data::Vec3(oldPosition.X - newPoint.GetX(), oldPosition.Y - newPoint.GetY(), oldPosition.Z - newPoint.GetZ());
+		info->LowerLeftCornerTranslation = API::Data::Vec3(info->Center.X, info->Center.Y, info->Center.Z + (width / 2.0f));
+		info->LowerRightCornerTranslation = API::Data::Vec3(info->Center.X, info->Center.Y, info->Center.Z - (width / 2.0f));
+		info->UpperLeftCornerTranslation = API::Data::Vec3(info->Center.X, info->Center.Y + height, info->Center.Z + (width / 2.0f));
+		info->UpperRightCornerTranslation = API::Data::Vec3(info->Center.X, info->Center.Y + height, info->Center.Z - (width / 2.0f));
 	};
-	auto rebaseInfoToObjectCentre = [&rebase](Graphic::Graphic3D::Infos::RelativeFaceInfo& info)
+	auto rotateInfo = [](Graphic::Graphic3D::Infos::RelativeFaceInfo* info, API::Data::Vec3 angles)
 	{
-		rebase(info.LowerLeftCornerTranslation, info.CenterOfBase, API::Cartesian::Point3D());
-		rebase(info.LowerRightCornerTranslation, info.CenterOfBase, API::Cartesian::Point3D());
-		rebase(info.UpperLeftCornerTranslation, info.CenterOfBase, API::Cartesian::Point3D());
-		rebase(info.UpperRightCornerTranslation, info.CenterOfBase, API::Cartesian::Point3D());
-		info.CenterOfBase = API::Cartesian::Point3D();
+		info->LowerLeftCornerTranslation.Rotate(angles);
+		info->LowerRightCornerTranslation.Rotate(angles);
+		info->UpperLeftCornerTranslation.Rotate(angles);
+		info->UpperRightCornerTranslation.Rotate(angles);
 	};
-	API::Cartesian::Vector3D mainVector = API::Cartesian::Vector3D(info->Start, info->End);
-	Graphic::Graphic3D::Infos::RelativeFaceInfo startInfo = _getEndFaceInfo(mainVector.GetVectorCoords(), mainVector.GetInvertedCopy().GetVectorCoords(), thickness, width);
-	Graphic::Graphic3D::Infos::RelativeFaceInfo endInfo = _getEndFaceInfo(mainVector.GetInvertedCopy().GetVectorCoords(), mainVector.GetVectorCoords(), thickness, width);
-	rebaseInfoToObjectCentre(startInfo);
-	rebaseInfoToObjectCentre(endInfo);
+
+	Graphic::Graphic3D::Infos::RelativeFaceInfo* startInfo = new Graphic::Graphic3D::Infos::RelativeFaceInfo();
+	Graphic::Graphic3D::Infos::RelativeFaceInfo* endInfo = new Graphic::Graphic3D::Infos::RelativeFaceInfo();
+	startInfo->Center = API::Data::Vec3();
+	endInfo->Center = API::Data::Vec3();
+	setRectangleFace(startInfo, info->Height, info->Width);
+	setRectangleFace(endInfo, info->Height, info->Width);
+	///
+	API::Data::Vec3 startRotations = info->StartFaceNormal.AnglesFrom(info->Length > 0 ? API::Data::Vec3(1.0f, 0.0f, 0.0f) : API::Data::Vec3(-1.0f, 0.0f, 0.0f));
+	API::Data::Vec3 endRotations = info->EndFaceNormal.AnglesFrom(info->Length <= 0 ? API::Data::Vec3(1.0f, 0.0f, 0.0f) : API::Data::Vec3(-1.0f, 0.0f, 0.0f));
+	///
+	rotateInfo(startInfo, startRotations);
+	rotateInfo(endInfo, endRotations);
+	///
+	API::Data::Vec3 translation = API::Data::Vec3(info->Length, 0.0f, 0.0f);
+	endInfo->Center.Translate(translation);
+	endInfo->LowerLeftCornerTranslation.Translate(translation);
+	endInfo->UpperLeftCornerTranslation.Translate(translation);
+	endInfo->LowerRightCornerTranslation.Translate(translation);
+	endInfo->UpperRightCornerTranslation.Translate(translation);
 
 	// Dodanie poczatku.
-	addTriangle(startInfo.LowerRightCornerTranslation, startInfo.LowerLeftCornerTranslation, startInfo.UpperLeftCornerTranslation);
-	addTriangle(startInfo.UpperRightCornerTranslation, startInfo.LowerRightCornerTranslation, startInfo.LowerLeftCornerTranslation);
+	addTriangle(startInfo->LowerRightCornerTranslation, startInfo->LowerLeftCornerTranslation, startInfo->UpperLeftCornerTranslation);
+	addTriangle(startInfo->UpperRightCornerTranslation, startInfo->LowerRightCornerTranslation, startInfo->LowerLeftCornerTranslation);
 	// Dodanie konca.
-	addTriangle(endInfo.LowerRightCornerTranslation, endInfo.LowerLeftCornerTranslation, endInfo.UpperLeftCornerTranslation);
-	addTriangle(endInfo.UpperRightCornerTranslation, endInfo.LowerRightCornerTranslation, endInfo.LowerLeftCornerTranslation);
+	addTriangle(endInfo->UpperLeftCornerTranslation, endInfo->LowerLeftCornerTranslation, endInfo->LowerRightCornerTranslation);
+	addTriangle(endInfo->LowerLeftCornerTranslation, endInfo->LowerRightCornerTranslation, endInfo->UpperRightCornerTranslation);
 	// Dodanie gory.
-	addTriangle(endInfo.UpperRightCornerTranslation, endInfo.UpperLeftCornerTranslation, startInfo.UpperLeftCornerTranslation);
-	addTriangle(endInfo.UpperLeftCornerTranslation, startInfo.UpperRightCornerTranslation, startInfo.UpperLeftCornerTranslation);
+	addTriangle(endInfo->UpperRightCornerTranslation, endInfo->UpperLeftCornerTranslation, startInfo->UpperLeftCornerTranslation);
+	addTriangle(endInfo->UpperLeftCornerTranslation, startInfo->UpperRightCornerTranslation, startInfo->UpperLeftCornerTranslation);
 	// Dodanie dolu.
-	addTriangle(endInfo.LowerRightCornerTranslation, startInfo.LowerLeftCornerTranslation, startInfo.LowerRightCornerTranslation);
-	addTriangle(endInfo.LowerRightCornerTranslation, startInfo.LowerRightCornerTranslation, endInfo.LowerLeftCornerTranslation);
+	addTriangle(endInfo->LowerRightCornerTranslation, startInfo->LowerLeftCornerTranslation, startInfo->LowerRightCornerTranslation);
+	addTriangle(endInfo->LowerRightCornerTranslation, startInfo->LowerRightCornerTranslation, endInfo->LowerLeftCornerTranslation);
 	// Dodanie przodu.
-	addTriangle(endInfo.UpperRightCornerTranslation, startInfo.UpperLeftCornerTranslation, startInfo.LowerLeftCornerTranslation);
-	addTriangle(endInfo.UpperRightCornerTranslation, startInfo.LowerLeftCornerTranslation, endInfo.LowerRightCornerTranslation);
+	addTriangle(endInfo->UpperRightCornerTranslation, startInfo->UpperLeftCornerTranslation, startInfo->LowerLeftCornerTranslation);
+	addTriangle(endInfo->UpperRightCornerTranslation, startInfo->LowerLeftCornerTranslation, endInfo->LowerRightCornerTranslation);
 	// Dodanie tylu.
-	addTriangle(endInfo.UpperLeftCornerTranslation, startInfo.LowerLeftCornerTranslation, startInfo.UpperLeftCornerTranslation);
-	addTriangle(endInfo.LowerLeftCornerTranslation, startInfo.LowerRightCornerTranslation, endInfo.UpperRightCornerTranslation);
+	addTriangle(endInfo->UpperLeftCornerTranslation, startInfo->LowerLeftCornerTranslation, startInfo->UpperLeftCornerTranslation);
+	addTriangle(endInfo->LowerLeftCornerTranslation, startInfo->LowerRightCornerTranslation, endInfo->UpperRightCornerTranslation);
 	for (unsigned i = 0; i < pCount; i++)
 	{
 		_coords.push_back(points[i].X);
@@ -109,4 +140,17 @@ Graphic::Graphic3D::Infos::RelativeFaceInfo Graphic::Graphic3D::Line::_getEndFac
 	info.UpperLeftCornerTranslation = API::Data::Vec3(info.LowerLeftCornerTranslation.X, info.LowerLeftCornerTranslation.Y + thickness, info.LowerLeftCornerTranslation.Z);
 	info.UpperRightCornerTranslation = API::Data::Vec3(info.LowerRightCornerTranslation.X, info.LowerRightCornerTranslation.Y + thickness, info.LowerRightCornerTranslation.Z);
 	return info;
+}
+
+void Graphic::Graphic3D::copyLines(Line* from, Line* to)
+{
+	to->_color = from->_color;
+	to->_coordCount = from->_coordCount;
+	to->_coords = from->_coords;
+	to->_indexCount = from->_indexCount;
+	to->_indices = from->_indices;
+	to->_normals = from->_normals;
+	to->_position = from->_position;
+	to->_rotation = from->_rotation;
+	to->_readyToDraw = false;
 }

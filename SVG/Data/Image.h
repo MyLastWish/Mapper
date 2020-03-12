@@ -2,7 +2,7 @@
 #define SVG_IMAGE_H
 #include <vector>
 #include "Shape.h"
-#include "3D/Model.h"
+#include "3D/PlanarModel.h"
 #include "3D/Mesh.h"
 namespace SVG
 {
@@ -18,7 +18,7 @@ namespace SVG
 		public:
 			Image();
 			Image(const char*);
-			Graphic::Graphic3D::Model* To3DModel();
+			Graphic::Graphic3D::PlanarModel* ToPlanarModel();
 		};
 	}
 }

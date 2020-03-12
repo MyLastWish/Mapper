@@ -15,6 +15,7 @@ namespace API
 			API::Cartesian::Point3D _start;
 			API::Cartesian::Point3D _end;
 		public:
+			Vector3D();
 			// Wektor ustalajacy punkty.
 			Vector3D(API::Cartesian::Point3D start, API::Cartesian::Point3D end);
 			Vector3D(API::Cartesian::Point3D start, API::Data::Vec3 vec);

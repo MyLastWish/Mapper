@@ -154,6 +154,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="2D\Cursor.h" />
+    <ClInclude Include="3D\Camera.h" />
     <ClInclude Include="3D\Drawable.h" />
     <ClInclude Include="3D\DrawableContainer.h" />
     <ClInclude Include="3D\Infos\LineInfo.h" />
@@ -161,14 +163,19 @@
     <ClInclude Include="3D\Line.h" />
     <ClInclude Include="3D\Mesh.h" />
     <ClInclude Include="3D\Model.h" />
+    <ClInclude Include="3D\PlanarModel.h" />
     <ClInclude Include="3D\Scene.h" />
     <ClInclude Include="3D\Vertex.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="2D\Cursor.cpp" />
+    <ClCompile Include="3D\Camera.cpp" />
     <ClCompile Include="3D\Line.cpp" />
     <ClCompile Include="3D\Mesh.cpp" />
     <ClCompile Include="3D\Model.cpp" />
+    <ClCompile Include="3D\Drawable.cpp" />
+    <ClCompile Include="3D\PlanarModel.cpp" />
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>

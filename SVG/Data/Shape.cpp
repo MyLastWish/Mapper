@@ -6,6 +6,7 @@ SVG::Data::Shape::Shape()
 }
 SVG::Data::Shape::Shape(NSVGshape* originalShape) : Shape()
 {
+	_lineWidth = originalShape->strokeWidth;
 	_strokeColor = _extractColor(&originalShape->stroke);
 	_fillColor = _extractColor(&originalShape->fill);
 	for (NSVGpath* path = originalShape->paths; path != NULL; path = path->next)
@@ -34,12 +35,19 @@ void SVG::Data::Shape::_addPath(SVG::Data::Path* path)
 	_paths = (SVG::Data::Path**)realloc(_paths, ++_pathCount * sizeof(SVG::Data::Path));
 	_paths[_pathCount - 1] = path;
 }
-std::vector<Graphic::Graphic3D::Mesh*> SVG::Data::Shape::ToMeshes()
+
+std::vector<Graphic::Graphic3D::Line*> SVG::Data::Shape::ToLines(unsigned& ct)
 {
-	std::vector<Graphic::Graphic3D::Mesh*> meshes;
+	std::vector<Graphic::Graphic3D::Line*> lines;
 	for (int i = 0; i < _pathCount; i++)
 	{
-		meshes.push_back(_paths[i]->ToMesh());
+		unsigned count = 0;
+		std::vector<Graphic::Graphic3D::Line*> gottenLines = _paths[i]->ToLines(_lineWidth, count);
+		for (int j = 0; j < count; j++)
+		{
+			lines.push_back(gottenLines[j]);
+		}
+		ct += count;
 	}
-	return meshes;
+	return lines;
 }

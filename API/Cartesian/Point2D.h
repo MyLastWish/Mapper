@@ -12,6 +12,7 @@ namespace API
 			Point2D();
 			Point2D(float x, float y);
 			void Move(API::Data::Vec2&);
+			API::Data::Vec2& operator-(const Point2D&);
 		};
 	}
 }

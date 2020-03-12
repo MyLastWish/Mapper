@@ -26,17 +26,20 @@ void SVG::Data::Image::_addShape(SVG::Data::Shape* shape)
 	_shapeCount++;
 }
 
-Graphic::Graphic3D::Model* SVG::Data::Image::To3DModel()
+Graphic::Graphic3D::PlanarModel* SVG::Data::Image::ToPlanarModel()
 {
-	std::vector<Graphic::Graphic3D::Mesh*> meshes;
+	std::vector<Graphic::Graphic3D::Line*> meshes;
+	unsigned count = 0;
 	for (unsigned i = 0; i < _shapeCount; i++)
 	{
-		std::vector<Graphic::Graphic3D::Mesh*> retreivedMeshes;
-		retreivedMeshes = _shapes[i]->ToMeshes();
-		for (unsigned j = 0; j < retreivedMeshes.size(); j++)
+		unsigned retreivedCount = 0;
+		std::vector<Graphic::Graphic3D::Line*> retreivedLines;
+		retreivedLines = _shapes[i]->ToLines(retreivedCount);
+		for (unsigned j = 0; j < retreivedCount; j++)
 		{
-			meshes.push_back(retreivedMeshes[j]);
+			meshes.push_back(retreivedLines[j]);
+			count++;
 		}
 	}
-	return new Graphic::Graphic3D::Model(meshes, meshes.size()); // TODO: Poprawic metode liczenia mesh.
+	return new Graphic::Graphic3D::PlanarModel(meshes, count);
 }

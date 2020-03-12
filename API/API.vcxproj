@@ -134,8 +134,11 @@
     <ClInclude Include="Cartesian\Point3D.h" />
     <ClInclude Include="Cartesian\Vector2D.h" />
     <ClInclude Include="Cartesian\Vector3D.h" />
+    <ClInclude Include="Data\Mat3.h" />
+    <ClInclude Include="Data\Mat4.h" />
     <ClInclude Include="Data\Vec2.h" />
     <ClInclude Include="Data\Vec3.h" />
+    <ClInclude Include="Data\Vec4.h" />
     <ClInclude Include="Graphic\Color.h" />
   </ItemGroup>
   <ItemGroup>
@@ -146,8 +149,11 @@
     <ClCompile Include="Cartesian\Point3D.cpp" />
     <ClCompile Include="Cartesian\Vector2D.cpp" />
     <ClCompile Include="Cartesian\Vector3D.cpp" />
+    <ClCompile Include="Data\Mat3.cpp" />
+    <ClCompile Include="Data\Mat4.cpp" />
     <ClCompile Include="Data\Vec2.cpp" />
     <ClCompile Include="Data\Vec3.cpp" />
+    <ClCompile Include="Data\Vec4.cpp" />
     <ClCompile Include="Graphic\Color.cpp" />
   </ItemGroup>
   <ItemGroup>

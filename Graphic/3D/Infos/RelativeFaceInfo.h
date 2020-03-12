@@ -11,7 +11,7 @@ namespace Graphic
 			// Informacja o polozeniu wierzcholkow sciany.
 			struct RelativeFaceInfo
 			{
-				API::Cartesian::Point3D CenterOfBase;
+				API::Data::Vec3 Center;
 				API::Data::Vec3 LowerLeftCornerTranslation;
 				API::Data::Vec3 LowerRightCornerTranslation;
 				API::Data::Vec3 UpperLeftCornerTranslation;

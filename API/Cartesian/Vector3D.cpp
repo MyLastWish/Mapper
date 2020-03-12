@@ -1,4 +1,8 @@
 #include "Vector3D.h"
+API::Cartesian::Vector3D::Vector3D()
+{
+	SetPoints(Point3D(), Point3D());
+}
 API::Cartesian::Vector3D::Vector3D(Point3D start, Point3D end)
 {
 	SetPoints(start, end);
@@ -22,7 +26,7 @@ float API::Cartesian::Vector3D::GetZ() const
 }
 float API::Cartesian::Vector3D::GetLength() const
 {
-	return std::sqrt(std::pow(_end.GetX() - _start.GetX(), 2), std::pow(_end.GetY() - _start.GetY(), 2), std::pow(_end.GetZ() - _start.GetZ(), 2));
+	return std::sqrt(std::pow(_end.GetX() - _start.GetX(), 2) + std::pow(_end.GetY() - _start.GetY(), 2) + std::pow(_end.GetZ() - _start.GetZ(), 2));
 }
 void API::Cartesian::Vector3D::SetPoints(Point3D start, Point3D end)
 {

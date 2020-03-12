@@ -12,19 +12,24 @@ namespace Graphic
 	class Shader
 	{
 	private:
-		// the program ID
+		// Id programu
 		unsigned int _ID;
 
 		unsigned _calculateFileLength(const char*);
+
+		// Metody sprawdzajace skompilowany shader.
+
 		bool _isShaderCorrect(GLuint, char*);
 		bool _isProgramCorrect(char*);
 
 	public:
-		// constructor reads and builds the shader
+		// Konstruktor.
 		Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath);
-		// use/activate the shader
+		// Aktywowanie programu shadera.
 		void Use();
-		// utility uniform functions
+
+		// Ustawianie wartosci uniformow shadera.
+
 		void Set4f(const char* name, glm::vec4 value) const;
 	};
 }

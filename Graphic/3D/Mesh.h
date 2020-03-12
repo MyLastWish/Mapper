@@ -19,7 +19,7 @@ namespace Graphic
 		public:
 			Mesh(aiMesh*, const aiScene*);
 			Mesh(std::vector<API::Cartesian::Point2D*>, std::vector<unsigned>);
-			Mesh(std::vector<API::Cartesian::Point3D*>, std::vector<unsigned>, std::vector<API::Cartesian::Vector3D>);
+			Mesh(std::vector<API::Cartesian::Point3D*>, std::vector<unsigned>, std::vector<API::Data::Vec3>);
 		};
 	}
 }

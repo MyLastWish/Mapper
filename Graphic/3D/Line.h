@@ -8,20 +8,23 @@
 #include "Cartesian/Vector3D.h"
 #include "Infos/LineInfo.h"
 #include "Infos/RelativeFaceInfo.h"
+#include "Data/Mat3.h"
 namespace Graphic
 {
 	namespace Graphic3D
 	{
-		class Line : Drawable
+		class Line : public Drawable
 		{
 		private:
 			// Metoda rysowania sciezki wzdloz odcinka miedzy dwoma punktami.
-			void _drawAlong(Graphic::Graphic3D::Infos::LineInfo*, float, float); // Najwazniejsza metoda klasy!
+			void _drawAlong(Graphic::Graphic3D::Infos::LineInfo*); // Najwazniejsza metoda klasy!
 			// Metoda majaca wyznaczyc punkty scian na koncach linii.
 			Graphic::Graphic3D::Infos::RelativeFaceInfo _getEndFaceInfo(API::Data::Vec3, API::Data::Vec3, float, float);
+			friend void copyLines(Line*, Line*);
 		public:
 			Line();
-			Line(API::Cartesian::Point3D, float, float);
+			Line(const Line&);
+			Line(Graphic::Graphic3D::Infos::LineInfo*);
 		};
 	}
 }

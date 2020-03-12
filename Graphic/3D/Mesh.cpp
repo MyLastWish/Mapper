@@ -38,7 +38,7 @@ Graphic::Graphic3D::Mesh::Mesh(std::vector<API::Cartesian::Point2D*> points, std
 	}
 }
 
-Graphic::Graphic3D::Mesh::Mesh(std::vector<API::Cartesian::Point3D*> points, std::vector<unsigned> indices, std::vector<API::Cartesian::Vector3D> normals) : Drawable(points, indices, normals)
+Graphic::Graphic3D::Mesh::Mesh(std::vector<API::Cartesian::Point3D*> points, std::vector<unsigned> indices, std::vector<API::Data::Vec3> normals) : Drawable(points, indices, normals)
 {
 }
 void Graphic::Graphic3D::Mesh::_prepare()

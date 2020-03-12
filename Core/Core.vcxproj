@@ -138,12 +138,14 @@
     <ClCompile Include="Callbacks.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Processors\ViewProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Callbacks.h" />
+    <ClInclude Include="Processors\ViewProcessor.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\API\API.vcxproj">

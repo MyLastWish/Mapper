@@ -4,7 +4,8 @@
 #include "Cartesian/Point2D.h"
 #include "NanoSVG.h"
 #include "Cartesian/Curves/BezierCurve.h"
-#include "3D/Mesh.h"
+#include "3D/Line.h"
+#include "3D/Infos/LineInfo.h"
 namespace SVG
 {
 	namespace Data
@@ -16,11 +17,12 @@ namespace SVG
 			std::vector<API::Cartesian::Point2D*> _points;
 			unsigned _indexCount = 0;
 			unsigned _pointCount = 0;
+			bool closed = false;
 		public:
 			Path();
 			Path(NSVGpath*);
 			void _addPointAndIndex(API::Cartesian::Point2D*);
-			Graphic::Graphic3D::Mesh* ToMesh();
+			std::vector<Graphic::Graphic3D::Line*> ToLines(float, unsigned&);
 		};
 	}
 }
