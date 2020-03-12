@@ -30,7 +30,7 @@ void API::Graphic::Color::Set(unsigned red, unsigned green, unsigned blue, unsig
 	_alpha = _limit(alpha, 0u, 255u);
 }
 
-glm::vec4 API::Graphic::Color::ToVec4()
+API::Data::Vec4 API::Graphic::Color::ToVec4()
 {
-	return glm::vec4((float)_red / 255, (float)_green / 255, (float)_blue / 255, (float)_alpha / 255);
+	return API::Data::Vec4((float)_red / 255, (float)_green / 255, (float)_blue / 255, (float)_alpha / 255);
 }

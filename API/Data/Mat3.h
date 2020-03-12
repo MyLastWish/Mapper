@@ -20,6 +20,9 @@ namespace API
 			float GetValue(int, int) const;
 			void SetValue(int, int, float);
 			void Eye(float = 1.0f);
+			void XRotation(float);
+			void YRotation(float);
+			void ZRotation(float);
 		};
 	}
 }

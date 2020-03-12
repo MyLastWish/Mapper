@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include "Data/Mat4.h"
 namespace Graphic
 {
 	class Shader
@@ -30,7 +31,8 @@ namespace Graphic
 
 		// Ustawianie wartosci uniformow shadera.
 
-		void Set4f(const char* name, glm::vec4 value) const;
+		void Set4f(const char* name, const API::Data::Vec4& value) const;
+		void SetMatrix4f(const char* name, const API::Data::Mat4& value) const;
 	};
 }
 #endif // !SHADER_H

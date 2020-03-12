@@ -84,3 +84,18 @@ void API::Data::Mat4::Eye(float value)
 		}
 	}
 }
+
+void API::Data::Mat4::MakeTranformationMatrix(const API::Data::Mat3& rotations, const API::Data::Vec3& translations)
+{
+	Eye(1.0f);
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			SetValue(i, j, rotations.GetValue(i, j));
+		}
+	}
+	SetValue(0, 0, translations.X);
+	SetValue(0, 0, translations.Y);
+	SetValue(0, 0, translations.Z);
+}

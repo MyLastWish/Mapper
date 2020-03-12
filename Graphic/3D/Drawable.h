@@ -6,6 +6,7 @@
 #include "Cartesian/Point2D.h"
 #include "Cartesian/Vector3D.h"
 #include "Graphic/Color.h"
+#include "Data/Mat4.h"
 #include <vector>
 #include <glm/glm.hpp>
 namespace Graphic
@@ -42,6 +43,7 @@ namespace Graphic
 			void PrepareToDraw();
 			void SetRotation(API::Data::Vec3);
 			void SetPosition(API::Data::Vec3);
+			virtual API::Data::Mat4 GetTransformationMatrix() const;
 		};
 	}
 }

@@ -13,6 +13,7 @@ API::Data::Mat3::Mat3(float value)
 API::Data::Mat3::Mat3() :API::Data::Mat3(0.0f)
 {
 }
+
 API::Data::Mat3::Mat3(const API::Data::Mat3& original) : API::Data::Mat3(0.0f)
 {
 	for (int i = 0; i < 3; i++)
@@ -32,6 +33,7 @@ API::Data::Vec3& API::Data::Mat3::operator*(const API::Data::Vec3& vector)
 	result.Z = _matrix[6] * vector.X + _matrix[7] * vector.Y + _matrix[8] * vector.Z;
 	return result;
 }
+
 API::Data::Mat3& API::Data::Mat3::operator*(const API::Data::Mat3& otherMatrix)
 {
 	API::Data::Mat3 resultMatrix = API::Data::Mat3();
@@ -67,6 +69,7 @@ void API::Data::Mat3::SetValue(int row, int column, float value)
 	}
 	_matrix[row * 3 + column] = value;
 }
+
 void API::Data::Mat3::Eye(float value)
 {
 	for (int i = 0; i < 3; i++)
@@ -83,4 +86,31 @@ void API::Data::Mat3::Eye(float value)
 			}
 		}
 	}
+}
+
+void API::Data::Mat3::XRotation(float angle)
+{
+	Eye(1.0f);
+	SetValue(0, 0, std::cos(angle));
+	SetValue(0, 1, -std::sin(angle));
+	SetValue(1, 0, std::sin(angle));
+	SetValue(1, 1, std::cos(angle));
+}
+
+void API::Data::Mat3::YRotation(float angle)
+{
+	Eye(1.0f);
+	SetValue(0, 0, std::cos(angle));
+	SetValue(0, 2, std::sin(angle));
+	SetValue(2, 0, -std::sin(angle));
+	SetValue(2, 2, std::cos(angle));
+}
+
+void API::Data::Mat3::ZRotation(float angle)
+{
+	Eye(1.0f);
+	SetValue(1, 1, std::cos(angle));
+	SetValue(1, 2, -std::sin(angle));
+	SetValue(2, 1, std::sin(angle));
+	SetValue(2, 2, std::cos(angle));
 }

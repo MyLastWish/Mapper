@@ -108,3 +108,18 @@ void Graphic::Graphic3D::copyDrawables(Drawable* original, Drawable* copy)
 	copy->_position = original->_position;
 	copy->_readyToDraw = false;
 }
+
+API::Data::Mat4 Graphic::Graphic3D::Drawable::GetTransformationMatrix() const
+{
+	API::Data::Mat4 matrix = API::Data::Mat4();
+	API::Data::Mat3 xRot = API::Data::Mat3();
+	API::Data::Mat3 yRot = API::Data::Mat3();
+	API::Data::Mat3 zRot = API::Data::Mat3();
+	API::Data::Mat3 rotations = API::Data::Mat3();
+	xRot.XRotation(_rotation.X);
+	yRot.YRotation(_rotation.Y);
+	zRot.ZRotation(_rotation.Z);
+	rotations = xRot * yRot * zRot;
+	matrix.MakeTranformationMatrix(rotations, _position);
+	return matrix;
+}
