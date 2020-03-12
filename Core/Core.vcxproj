@@ -141,6 +141,8 @@
     <ClCompile Include="Processors\ViewProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="basicShader.frag" />
+    <None Include="basicShader.vert" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
