@@ -123,3 +123,4 @@ API::Data::Mat4 Graphic::Graphic3D::Drawable::GetTransformationMatrix() const
 	matrix.MakeTranformationMatrix(rotations, _position);
 	return matrix;
 }
+

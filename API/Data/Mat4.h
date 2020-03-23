@@ -21,6 +21,7 @@ namespace API
 			void SetValue(int, int, float);
 			void Eye(float = 1.0f);
 			void MakeTranformationMatrix(const API::Data::Mat3&, const API::Data::Vec3&);
+			float* GetMatrixPointer() const;
 		};
 	}
 }

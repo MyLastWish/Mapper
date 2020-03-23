@@ -58,7 +58,7 @@ Graphic::Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentSh
 unsigned Graphic::Shader::_calculateFileLength(const char* fileName)
 {
 	FILE* file;
-	fopen_s(&file, fileName, "r");
+	file = fopen(fileName, "r");
 	if (file == NULL)
 	{
 		return 0;
@@ -98,7 +98,12 @@ bool Graphic::Shader::_isProgramCorrect(char* log)
 	return true;
 }
 
-void Graphic::Shader::Set4f(const char* name, glm::vec4 value) const
+void Graphic::Shader::Set4f(const char* name, const API::Data::Vec4& value) const
 {
-	glUniform4f(glGetUniformLocation(_ID, name), value.x, value.y, value.z, value.w);
+	glUniform4f(glGetUniformLocation(_ID, name), value.X, value.Y, value.Z, value.W);
+}
+
+void Graphic::Shader::SetMatrix4f(const char* name, const API::Data::Mat4& value) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(_ID, name), 1, false, value.GetMatrixPointer());
 }

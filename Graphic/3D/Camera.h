@@ -46,7 +46,8 @@ namespace Graphic
 			void Zoom(float);
 			float GetZoom() const;
 			API::Data::Vec3 GetPosition() const;
-			API::Data::Mat4 GetViewMatrix();
+			API::Data::Mat4* GetViewMatrix();
+			API::Data::Mat4 GetProjectionMatrix(float, float) const;
 		};
 	}
 }

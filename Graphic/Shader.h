@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include <stdio.h>
 #include "Data/Mat4.h"
 namespace Graphic
 {
@@ -26,6 +27,7 @@ namespace Graphic
 	public:
 		// Konstruktor.
 		Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath);
+
 		// Aktywowanie programu shadera.
 		void Use();
 

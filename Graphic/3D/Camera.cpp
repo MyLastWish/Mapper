@@ -83,10 +83,33 @@ API::Data::Vec3 Graphic::Graphic3D::Camera::GetPosition() const
 	return _position;
 }
 
-API::Data::Mat4 Graphic::Graphic3D::Camera::GetViewMatrix()
+API::Data::Mat4* Graphic::Graphic3D::Camera::GetViewMatrix()
 {
 	glm::vec3 position = glm::vec3(_position.X, _position.Y, _position.Z);
 	glm::vec3 front = glm::vec3(_frontNormal.X, _frontNormal.Y, _frontNormal.Z);
 	glm::vec3 up = glm::vec3(_upNormal.X, _upNormal.Y, _upNormal.Z);
-	glm:mat4 view = glm::lookAt
+	glm::mat4 view = glm::lookAt(position, position + front, up);
+	API::Data::Mat4* result = new API::Data::Mat4();
+	for(int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			result->SetValue(i, j, view[i][j]);
+		}
+	}
+	return result;
+}
+
+API::Data::Mat4 Graphic::Graphic3D::Camera::GetProjectionMatrix(float screenWidth, float screenHeight) const
+{
+	glm::mat4 projection = glm::perspective(glm::radians(_zoom), screenWidth/screenHeight, 0.1f, 100.0f);
+	API::Data::Mat4 result = API::Data::Mat4();
+	for(int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			result.SetValue(i, j, projection[i][j]);
+		}
+	}
+	return result;
 }
