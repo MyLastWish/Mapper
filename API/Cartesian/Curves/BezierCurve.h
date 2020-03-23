@@ -1,7 +1,7 @@
 #ifndef BEZIER_CURVE_H
 #define BEZIER_CURVE_H
-#include "Cartesian/Point2D.h"
-#include "Cartesian/Vector2D.h"
+#include "../Point2D.h"
+#include "../Vector2D.h"
 #include <vector>
 namespace API
 {

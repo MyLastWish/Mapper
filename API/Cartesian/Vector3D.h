@@ -1,9 +1,8 @@
 #ifndef VECTOR3D_H
 #define VECTOR3D_H
-#include <glad/glad.h>
 #include "Object3D.h"
 #include "Point3D.h"
-#include "Data/Vec3.h"
+#include "../Data/Vec3.h"
 #include <math.h>
 namespace API
 {

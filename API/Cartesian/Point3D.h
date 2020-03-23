@@ -1,6 +1,6 @@
 #ifndef POINT3D_H
 #define POINT3D_H
-#include "Data/Vec3.h"
+#include "../Data/Vec3.h"
 #include "Object3D.h"
 namespace API
 {

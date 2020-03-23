@@ -82,3 +82,11 @@ API::Data::Vec3 Graphic::Graphic3D::Camera::GetPosition() const
 {
 	return _position;
 }
+
+API::Data::Mat4 Graphic::Graphic3D::Camera::GetViewMatrix()
+{
+	glm::vec3 position = glm::vec3(_position.X, _position.Y, _position.Z);
+	glm::vec3 front = glm::vec3(_frontNormal.X, _frontNormal.Y, _frontNormal.Z);
+	glm::vec3 up = glm::vec3(_upNormal.X, _upNormal.Y, _upNormal.Z);
+	glm:mat4 view = glm::lookAt
+}

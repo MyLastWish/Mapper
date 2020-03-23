@@ -1,6 +1,9 @@
 #ifndef CAMERA_H
 #define CAMERA_H
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "Data/Vec3.h"
+#include "Data/Mat4.h"
 namespace Graphic
 {
 	namespace Graphic3D
@@ -43,6 +46,7 @@ namespace Graphic
 			void Zoom(float);
 			float GetZoom() const;
 			API::Data::Vec3 GetPosition() const;
+			API::Data::Mat4 GetViewMatrix();
 		};
 	}
 }
