@@ -3,7 +3,7 @@
 #include <vector>
 #include <math.h>
 #include <functional>
-#include "Drawable.h"
+#include "DrawableObject.h"
 #include "Cartesian/Point3D.h"
 #include "Cartesian/Vector3D.h"
 #include "Infos/LineInfo.h"
@@ -13,7 +13,7 @@ namespace Graphic
 {
 	namespace Graphic3D
 	{
-		class Line : public Drawable
+		class Line : public DrawableObject
 		{
 		private:
 			// Metoda rysowania sciezki wzdloz odcinka miedzy dwoma punktami.

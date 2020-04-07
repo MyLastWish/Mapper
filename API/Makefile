@@ -10,7 +10,7 @@ TARGET = libAPI.a
 VERBOSE = TRUE
 
 # Create the list of directories
-DIRS = API/Data API/Cartesian API/Cartesian/Curves API/Graphic Include/glad
+DIRS = API/Data API/Cartesian API/Cartesian/Curves API/Graphic API Include
 SOURCEDIRS = $(foreach dir, $(DIRS), $(addprefix $(SOURCEDIR)/, $(dir)))
 TARGETDIRS = $(foreach dir, $(DIRS), $(addprefix $(BUILDDIR)/, $(dir)))
 

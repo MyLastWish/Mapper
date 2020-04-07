@@ -12,7 +12,7 @@ namespace Processors
 		Graphic::Graphic3D::Camera* _camera = nullptr;
 		Graphic::Graphic2D::Cursor* _cursor = nullptr;
 		float _deltaTime = 0;
-		long float _lastTime = 0;
+		float _lastTime = 0;
 		bool _isKeyPressed(int);
 		void _updateTime();
 	public:

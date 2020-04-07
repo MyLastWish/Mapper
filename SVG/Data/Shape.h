@@ -1,5 +1,6 @@
 #ifndef SVG_SHAPE_H
 #define SVG_SHAPE_H
+#include <vector>
 #include "Path.h"
 #include "Graphic/Color.h"
 #include "3D/Line.h"
@@ -10,7 +11,7 @@ namespace SVG
 		class Shape
 		{
 		private:
-			SVG::Data::Path** _paths;
+			std::vector<SVG::Data::Path*> _paths;
 			unsigned _pathCount;
 			API::Graphic::Color _fillColor;
 			API::Graphic::Color _strokeColor;

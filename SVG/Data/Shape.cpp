@@ -32,8 +32,8 @@ API::Graphic::Color SVG::Data::Shape::_extractColor(NSVGpaint* paint)
 
 void SVG::Data::Shape::_addPath(SVG::Data::Path* path)
 {
-	_paths = (SVG::Data::Path**)realloc(_paths, ++_pathCount * sizeof(SVG::Data::Path));
-	_paths[_pathCount - 1] = path;
+	_paths.push_back(path);
+	_pathCount++;
 }
 
 std::vector<Graphic::Graphic3D::Line*> SVG::Data::Shape::ToLines(unsigned& ct)

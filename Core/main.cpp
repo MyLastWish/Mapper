@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <functional>
 #include "Shader.h"
 #include "Callbacks.h"
 #include "Data/Image.h"
@@ -46,9 +47,9 @@ int main()
 	Graphic::Graphic2D::Cursor* mainCursor = new Graphic::Graphic2D::Cursor();
 	Processors::ViewProcessor* viewProc = new Processors::ViewProcessor(mainCamera, mainCursor, window);
 	glfwSetFramebufferSizeCallback(window, Callbacks::ResizeCallback);
-	glfwSetCursorPosCallback(window, viewProc->MouseCallback);
-	SVG::Data::Image* image = new SVG::Data::Image("D:\\Downloads\\rectangles.svg");
-	Graphic::Shader* basicShader = new Graphic::Shader("C:\\Users\\Adam\\source\\repos\\MyLastWish\\SvgMapper\\SvgMapper\\basicShader.vert", "C:\\Users\\Adam\\source\\repos\\MyLastWish\\SvgMapper\\SvgMapper\\basicShader.frag");
+	//glfwSetCursorPosCallback(window, Callbacks::MouseCallback);
+	SVG::Data::Image* image = new SVG::Data::Image("/run/media/adam/Data/Downloads/ex.svg");
+	Graphic::Shader* basicShader = new Graphic::Shader("/run/media/adam/Data/Coding/Projects/mapper/Core/basicShader.vert", "/run/media/adam/Data/Coding/Projects/mapper/Core/basicShader.frag");
 	Graphic::Graphic3D::PlanarModel* model = image->ToPlanarModel();
 	while (!glfwWindowShouldClose(window))
 	{

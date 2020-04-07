@@ -1,7 +1,7 @@
 #ifndef POINT2D_H
 #define POINT2D_H
 #include "Object2D.h"
-#include "../Data/Vec2.h"
+#include "Data/Vec2.h"
 namespace API
 {
 	namespace Cartesian

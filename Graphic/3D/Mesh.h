@@ -1,6 +1,6 @@
 #ifndef MESH_H
 #define MESH_H
-#include "Drawable.h"
+#include "DrawableObject.h"
 #include "Cartesian/Point3D.h"
 #include "Cartesian/Point2D.h"
 #include "Cartesian/Vector3D.h"
@@ -12,7 +12,7 @@ namespace Graphic
 {
 	namespace Graphic3D
 	{
-		class Mesh : public Drawable
+		class Mesh : public DrawableObject
 		{
 		private:
 			void _prepare() override;

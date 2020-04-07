@@ -22,7 +22,7 @@ Processors::ViewProcessor::ViewProcessor(Graphic::Graphic3D::Camera* cam, Graphi
 {
 	_camera = cam;
 	_cursor = cur;
-	_cursor->SetCursorMovementReaction(_camera->Rotate);
+	//_cursor->SetCursorMovementReaction(_camera->Rotate);
 }
 
 Processors::ViewProcessor::ViewProcessor(Graphic::Graphic3D::Camera* cam, Graphic::Graphic2D::Cursor* cur, GLFWwindow* win)
@@ -30,7 +30,7 @@ Processors::ViewProcessor::ViewProcessor(Graphic::Graphic3D::Camera* cam, Graphi
 	_camera = cam;
 	_cursor = cur;
 	_window = win;
-	_cursor->SetCursorMovementReaction(_camera->Rotate);
+	//_cursor->SetCursorMovementReaction(_camera->Rotate);
 }
 
 void Processors::ViewProcessor::ProcessKeyboardInput()
@@ -74,7 +74,7 @@ void Processors::ViewProcessor::MouseCallback(GLFWwindow* window, double x, doub
 
 void Processors::ViewProcessor::_updateTime()
 {
-	long float currentTime = glfwGetTime();
+	float currentTime = glfwGetTime();
 	_deltaTime = currentTime - _lastTime;
 	_lastTime = currentTime;
 }

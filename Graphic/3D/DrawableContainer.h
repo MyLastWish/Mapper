@@ -1,7 +1,9 @@
 #ifndef DRAWABLE_CONTAINER_H
 #define DRAWABLE_CONTAINER_H
 #include "Drawable.h"
+#include "../API/Graphic/Positionable.h"
 #include "Shader.h"
+#include "DrawableObject.h"
 #include <vector>
 #include <type_traits>
 namespace Graphic
@@ -9,14 +11,14 @@ namespace Graphic
 	namespace Graphic3D
 	{
 		template <class C> // C musi dzedziczyc po Drawable.
-		class DrawableContainer
+		class DrawableContainer : public API::Graphic::Positionable, public Graphic::Graphic3D::Drawable
 		{
-			static_assert(std::is_base_of<Graphic::Graphic3D::Drawable, C>::value, "Class C must derive from Drawable");
+			static_assert(std::is_base_of<Graphic::Graphic3D::DrawableObject, C>::value, "Class C must derive from DrawableObject");
 		private:
 			std::vector<C*> _contents;
 			unsigned _count = 0;
 		public:
-			DrawableContainer()
+			DrawableContainer(): Positionable()
 			{
 				_contents.clear();
 				_count = 0;
@@ -35,7 +37,7 @@ namespace Graphic
 					Add(vec[i]);
 				}
 			}
-			void Draw(Shader* shader)
+			void Draw(Shader* shader) override
 			{
 				for (int i = 0; i < _count; i++)
 				{
@@ -61,6 +63,20 @@ namespace Graphic
 					_contents[i] = _contents[i + 1];
 				}
 				_contents.pop_back();
+			}
+
+			unsigned GetCount() const
+			{
+				return _count;
+			}
+
+			C* At(unsigned index)
+			{
+				if(index < 0 || index >= _count)
+				{
+					return nullptr;
+				}
+				return _contents[index];
 			}
 		};
 	}

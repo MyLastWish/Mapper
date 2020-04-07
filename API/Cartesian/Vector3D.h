@@ -2,7 +2,7 @@
 #define VECTOR3D_H
 #include "Object3D.h"
 #include "Point3D.h"
-#include "../Data/Vec3.h"
+#include "Data/Vec3.h"
 #include <math.h>
 namespace API
 {

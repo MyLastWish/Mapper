@@ -49,7 +49,7 @@ API::Data::Mat4& API::Data::Mat4::operator*(const Mat4& otherMatrix)
 	}
 	return resultMatrix;
 }
-float API::Data::Mat4::GetValue(int row, int column) const
+const float API::Data::Mat4::GetValue(int row, int column) const
 {
 	if (column < 0 || column > 3 || row < 0 || row > 3)
 	{
@@ -98,4 +98,9 @@ void API::Data::Mat4::MakeTranformationMatrix(const API::Data::Mat3& rotations, 
 	SetValue(0, 0, translations.X);
 	SetValue(0, 0, translations.Y);
 	SetValue(0, 0, translations.Z);
+}
+
+const float* API::Data::Mat4::GetMatrixPointer() const
+{
+	return _matrix;
 }

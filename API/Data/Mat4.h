@@ -17,11 +17,13 @@ namespace API
 			Mat4(float);
 			Vec4& operator*(const API::Data::Vec4&);
 			Mat4& operator*(const Mat4&);
-			float GetValue(int, int) const;
+			const float GetValue(int, int) const;
 			void SetValue(int, int, float);
 			void Eye(float = 1.0f);
+			// Stworzenie macierzy transformacji na podstawie macierzy rotacji i wektora przesuniec.
 			void MakeTranformationMatrix(const API::Data::Mat3&, const API::Data::Vec3&);
-			float* GetMatrixPointer() const;
+			// Zwroc wskaznik na macierz. 
+			const float* GetMatrixPointer() const;
 		};
 	}
 }

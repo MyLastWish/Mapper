@@ -52,7 +52,7 @@ API::Data::Mat3& API::Data::Mat3::operator*(const API::Data::Mat3& otherMatrix)
 	return resultMatrix;
 }
 
-float API::Data::Mat3::GetValue(int row, int column) const
+const float API::Data::Mat3::GetValue(int row, int column) const
 {
 	if (row > 2 || row < 0 || column > 2 || column < 0)
 	{
