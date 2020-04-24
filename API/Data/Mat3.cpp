@@ -1,17 +1,36 @@
 #include "Mat3.h"
+#include "Vec3.h"
+#include <iostream>
 API::Data::Mat3::Mat3(float value)
 {
+	_columns = new API::Data::Vec3[3];
+	assert(_columns != 0);
+
+	
 	for (int i = 0; i < 3; i++)
 	{
-		for (int j = 0; j < 3; j++)
-		{
-			_matrix[i * 3 + j] = value;
-		}
+		_columns[i] = API::Data::Vec3();
+		_columns[i].X = value;
+		_columns[i].Y = value;
+		_columns[i].Z = value;
+
 	}
 }
 
-API::Data::Mat3::Mat3() :API::Data::Mat3(0.0f)
+API::Data::Mat3::Mat3() : API::Data::Mat3(0.0f)
 {
+}
+
+API::Data::Mat3::~Mat3()
+{
+	std::cout << "Attempting to destroy Mat3 " << this << std::endl;
+	std::cout << _columns << std::endl;
+	if(_columns == nullptr)
+	{
+		return;
+	}
+	delete[] _columns;
+	std::cout << "Destroyed" << std::endl;
 }
 
 API::Data::Mat3::Mat3(const API::Data::Mat3& original) : API::Data::Mat3(0.0f)
@@ -20,54 +39,76 @@ API::Data::Mat3::Mat3(const API::Data::Mat3& original) : API::Data::Mat3(0.0f)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			_matrix[i * 3 + j] = original.GetValue(i, j);
+			_columns[i][j]= original[i][j];
 		}
 	}
 }
 
-API::Data::Vec3& API::Data::Mat3::operator*(const API::Data::Vec3& vector)
+API::Data::Vec3 API::Data::Mat3::operator*(const API::Data::Vec3& vector)
 {
 	API::Data::Vec3 result = API::Data::Vec3();
-	result.X = _matrix[0] * vector.X + _matrix[1] * vector.Y + _matrix[2] * vector.Z;
-	result.Y = _matrix[3] * vector.X + _matrix[4] * vector.Y + _matrix[5] * vector.Z;
-	result.Z = _matrix[6] * vector.X + _matrix[7] * vector.Y + _matrix[8] * vector.Z;
+	result.X = _columns[0].X * vector.X + _columns[1].X * vector.Y + _columns[2].X * vector.Z;
+	result.Z = _columns[0].Y * vector.X + _columns[1].Y * vector.Y + _columns[2].Y * vector.Z;
+	result.Y = _columns[0].Z * vector.X + _columns[1].Z * vector.Y + _columns[2].Z * vector.Z;
 	return result;
 }
 
-API::Data::Mat3& API::Data::Mat3::operator*(const API::Data::Mat3& otherMatrix)
+API::Data::Mat3 API::Data::Mat3::operator*(const API::Data::Mat3& otherMatrix)
 {
 	API::Data::Mat3 resultMatrix = API::Data::Mat3();
 	for (int i = 0; i < 3; i++) // Iteracja po wierszach macierzy wynikowej.
 	{
 		for (int j = 0; j < 3; j++) // Iteracja po kolumnach macierzy wynikowej.
 		{
-			float result = 0;
+			float result = 0.0f;
 			for (int k = 0; k < 3; k++)
 			{
-				result += GetValue(i, k) * otherMatrix.GetValue(k, j);
+				result += _columns[j][k] * otherMatrix[k][i];
 			}
-			SetValue(i, j, result);
+			resultMatrix[j][i] = result;
 		}
 	}
 	return resultMatrix;
 }
 
-const float API::Data::Mat3::GetValue(int row, int column) const
+
+API::Data::Vec3& API::Data::Mat3::operator[](const int& column)
 {
-	if (row > 2 || row < 0 || column > 2 || column < 0)
-	{
-		return 0; // TODO: Wywalanie bledu.
-	}
-	return _matrix[row * 3 + column];
+	assert(column >= 0 && column <= 3);
+	return _columns[column];
+}
+API::Data::Vec3 API::Data::Mat3::operator[](const int& column) const
+{
+	assert(column >= 0 && column <= 3);
+	return _columns[column];
 }
 
-void API::Data::Mat3::SetValue(int row, int column, float value)
+API::Data::Mat3& API::Data::Mat3::operator=(const Mat3& original)
 {
-	if (row > 2 || row < 0 || column > 2 || column < 0)
+	if(&original == this)
 	{
-		return; // TODO: Wywalanie bledu.
+		return *this;
 	}
-	_matrix[row * 3 + column] = value;
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			_columns[i][j]= original[i][j];
+		}
+	}
+	return *this;
+}
+const float API::Data::Mat3::GetValue(int column, int row) const
+{
+	assert(row <= 2 && row >= 0 && column <= 2 && column >= 0);
+	return _columns[column][row];
+}
+
+void API::Data::Mat3::SetValue(int column, int row, float value)
+{
+	assert(row <= 2 && row >= 0 && column <= 2 && column >= 0);
+	_columns[column][row] = value;
 }
 
 void API::Data::Mat3::Eye(float value)
@@ -78,11 +119,11 @@ void API::Data::Mat3::Eye(float value)
 		{
 			if (i == j)
 			{
-				SetValue(i, j, value);
+				_columns[j][i] = value;
 			}
 			else
 			{
-				SetValue(i, j, 0.0f);
+				_columns[j][i] = 0.0f;
 			}
 		}
 	}

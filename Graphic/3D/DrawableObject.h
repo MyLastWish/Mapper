@@ -5,8 +5,8 @@
 #include "Cartesian/Point3D.h"
 #include "Cartesian/Point2D.h"
 #include "Cartesian/Vector3D.h"
-#include "Graphic/Color.h"
-#include "Graphic/Positionable.h"
+#include "../Color.h"
+#include "Positionable.h"
 #include "Data/Mat4.h"
 #include <vector>
 #include <glm/glm.hpp>
@@ -16,7 +16,7 @@ namespace Graphic
 {
 	namespace Graphic3D
 	{
-		class DrawableObject : public API::Graphic::Positionable, public Graphic::Graphic3D::Drawable
+		class DrawableObject : public Graphic::Graphic3D::Drawable
 		{
 		protected:
 			GLuint _vao = 0;
@@ -25,7 +25,7 @@ namespace Graphic
 			std::vector<unsigned> _indices;
 			std::vector<float> _coords;
 			std::vector<API::Data::Vec3> _normals;
-			API::Graphic::Color _color;
+			Graphic::Color _color;
 			unsigned _coordCount = 0;
 			unsigned _indexCount = 0;
 			bool _readyToDraw = false;
@@ -34,15 +34,16 @@ namespace Graphic
 			void _generateBuffers(); // Podstawowa funkcja ktora przygotowuje bufory.
 			void _invalidate();
 			void _validate();
+			void _drawObject(Graphic::Shader*) override;
 			friend void copyDrawableObjects(DrawableObject*, DrawableObject*);
 		public:
 			DrawableObject();
 			DrawableObject(std::vector<API::Cartesian::Point2D*>, std::vector<unsigned>);
 			DrawableObject(std::vector<API::Cartesian::Point3D*>, std::vector<unsigned>, std::vector<API::Data::Vec3>);
 			DrawableObject(DrawableObject&);
-			void Draw(Graphic::Shader*) override;
 			void PrepareToDraw();
 		};
+		void copyDrawableObjects(DrawableObject*, DrawableObject*);
 	}
 }
 #endif

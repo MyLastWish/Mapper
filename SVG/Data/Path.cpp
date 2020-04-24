@@ -1,4 +1,5 @@
 #include "Path.h"
+#include <iostream>
 SVG::Data::Path::Path()
 {
 	_indices.clear();
@@ -59,6 +60,7 @@ void SVG::Data::Path::_addPointAndIndex(API::Cartesian::Point2D* point)
 std::vector<Graphic::Graphic3D::Line*> SVG::Data::Path::ToLines(float width, unsigned& count)
 {
 	std::vector<Graphic::Graphic3D::Line*> result;
+	std::cout << "New Info" << std::endl;
 	Graphic::Graphic3D::Infos::LineInfo* info = new Graphic::Graphic3D::Infos::LineInfo();
 	info->Height = width;
 	info->Width = width;
@@ -67,6 +69,7 @@ std::vector<Graphic::Graphic3D::Line*> SVG::Data::Path::ToLines(float width, uns
 	API::Cartesian::Vector3D sectionVector, previousVector, nextVector;
 	for (unsigned i = 0; i < _indexCount; i++)
 	{
+		std::cout << "Run no: " << i << std::endl;
 		if (i == 0)
 		{
 			sectionVector = API::Cartesian::Vector3D(
@@ -166,6 +169,13 @@ std::vector<Graphic::Graphic3D::Line*> SVG::Data::Path::ToLines(float width, uns
 		info->StartFaceNormal.Rotate(current.AnglesFrom(previous));
 		info->Start = sectionVector.GetStart();
 		info->Length = sectionVector.GetLength();
+		if(info->Length == 0.0f)
+		{
+			continue;
+		}
+		std::cout << "X: " << info->Width  << std::endl;
+
+		std::cout << "New Line" << std::endl;
 		Graphic::Graphic3D::Line* line = new Graphic::Graphic3D::Line(info);
 		line->SetRotation(current.AnglesFrom(referenceVec));
 		result.push_back(line);

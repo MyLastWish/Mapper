@@ -1,5 +1,5 @@
 #include "Mesh.h"
-Graphic::Graphic3D::Mesh::Mesh(aiMesh* mesh, const aiScene* scene) : Drawable()
+Graphic::Graphic3D::Mesh::Mesh(aiMesh* mesh, const aiScene* scene) : DrawableObject()
 {
 	std::vector<float> points;
 	std::vector<unsigned> indices;
@@ -29,7 +29,7 @@ Graphic::Graphic3D::Mesh::Mesh(aiMesh* mesh, const aiScene* scene) : Drawable()
 	_normals = normals;
 }
 
-Graphic::Graphic3D::Mesh::Mesh(std::vector<API::Cartesian::Point2D*> points, std::vector<unsigned> indices) : Drawable(points, indices)
+Graphic::Graphic3D::Mesh::Mesh(std::vector<API::Cartesian::Point2D*> points, std::vector<unsigned> indices) : DrawableObject(points, indices)
 {
 	_normals.clear();
 	for (int i = 0; i < _indexCount; i++)
@@ -38,7 +38,7 @@ Graphic::Graphic3D::Mesh::Mesh(std::vector<API::Cartesian::Point2D*> points, std
 	}
 }
 
-Graphic::Graphic3D::Mesh::Mesh(std::vector<API::Cartesian::Point3D*> points, std::vector<unsigned> indices, std::vector<API::Data::Vec3> normals) : Drawable(points, indices, normals)
+Graphic::Graphic3D::Mesh::Mesh(std::vector<API::Cartesian::Point3D*> points, std::vector<unsigned> indices, std::vector<API::Data::Vec3> normals) : DrawableObject(points, indices, normals)
 {
 }
 void Graphic::Graphic3D::Mesh::_prepare()

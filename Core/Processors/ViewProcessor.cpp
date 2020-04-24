@@ -78,3 +78,24 @@ void Processors::ViewProcessor::_updateTime()
 	_deltaTime = currentTime - _lastTime;
 	_lastTime = currentTime;
 }
+
+void Processors::ViewProcessor::SetSize(float h, float w)
+{
+	_height = h;
+	_width = w;
+}
+
+void Processors::ViewProcessor::UpdateMatrices()
+{
+	_camera->UpdateView(_scene->GetShaderPtr());
+	_camera->UpdateProjection(_scene->GetShaderPtr(), _width, _height);
+}
+
+void Processors::ViewProcessor::SetScene(Graphic::Graphic3D::Scene* scene)
+{
+	if(scene == nullptr)
+	{
+		return;
+	}
+	_scene = scene;
+}

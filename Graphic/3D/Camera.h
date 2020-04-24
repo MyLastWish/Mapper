@@ -4,6 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Data/Vec3.h"
 #include "Data/Mat4.h"
+#include "../Shader.h"
 namespace Graphic
 {
 	namespace Graphic3D
@@ -32,10 +33,15 @@ namespace Graphic
 			float _mouseSensitivity = 0.1f;
 			float _zoom = 45.0f;
 
+			// Flagi
+
+			bool _projectionChanged = true;
+			bool _viewChanged = true;
+
 			// Metody
 
 			void _rotate(API::Data::Vec3&);
-			void _move(API::Data::Vec3&);
+			void _move(const API::Data::Vec3&);
 			void _changeZoom(float);
 		public:
 			Camera();
@@ -46,8 +52,10 @@ namespace Graphic
 			void Zoom(float);
 			float GetZoom() const;
 			API::Data::Vec3 GetPosition() const;
-			API::Data::Mat4* GetViewMatrix();
+			API::Data::Mat4 GetViewMatrix();
 			API::Data::Mat4 GetProjectionMatrix(float, float) const;
+			void UpdateView(Graphic::Shader*);
+			void UpdateProjection(Graphic::Shader*, float, float);
 		};
 	}
 }

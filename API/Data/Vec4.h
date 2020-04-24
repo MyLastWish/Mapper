@@ -1,5 +1,6 @@
 #ifndef VEC4_H
 #define VEC4_H
+#include <assert.h>
 namespace API
 {
 	namespace Data
@@ -15,6 +16,8 @@ namespace API
 			Vec4(float, float, float, float);
 			Vec4(const Vec4*);
 			Vec4(const Vec4&);
+			float& operator[](const int&);
+			float operator[](const int&) const;
 		};
 	}
 }

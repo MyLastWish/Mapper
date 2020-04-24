@@ -3,6 +3,8 @@
 #include "Vec4.h"
 #include "Mat3.h"
 #include "Vec3.h"
+#include "../../Include/glm/glm.hpp"
+#include <string>
 namespace API
 {
 	namespace Data
@@ -10,13 +12,16 @@ namespace API
 		struct Mat4
 		{
 		private:
-			float _matrix[16] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+			API::Data::Vec4 _columns[4] = { API::Data::Vec4(), API::Data::Vec4(), API::Data::Vec4(), API::Data::Vec4() };
 		public:
 			Mat4();
 			Mat4(const Mat4&);
 			Mat4(float);
-			Vec4& operator*(const API::Data::Vec4&);
-			Mat4& operator*(const Mat4&);
+			Mat4(const glm::mat4&);
+			Vec4 operator*(const API::Data::Vec4&);
+			Mat4 operator*(const Mat4&);
+			API::Data::Vec4 operator[](const int&) const;
+			API::Data::Vec4& operator[](const int&);
 			const float GetValue(int, int) const;
 			void SetValue(int, int, float);
 			void Eye(float = 1.0f);
@@ -24,6 +29,7 @@ namespace API
 			void MakeTranformationMatrix(const API::Data::Mat3&, const API::Data::Vec3&);
 			// Zwroc wskaznik na macierz. 
 			const float* GetMatrixPointer() const;
+			glm::mat4 ToGLM();
 		};
 	}
 }

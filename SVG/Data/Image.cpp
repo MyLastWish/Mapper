@@ -28,7 +28,7 @@ void SVG::Data::Image::_addShape(SVG::Data::Shape* shape)
 
 Graphic::Graphic3D::PlanarModel* SVG::Data::Image::ToPlanarModel()
 {
-	std::vector<Graphic::Graphic3D::Line*> meshes;
+	std::vector<Graphic::Graphic3D::DrawableObject*> meshes;
 	unsigned count = 0;
 	for (unsigned i = 0; i < _shapeCount; i++)
 	{

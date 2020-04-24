@@ -6,12 +6,12 @@ namespace Graphic
 {
 	namespace Graphic3D
 	{
-		class PlanarModel : public DrawableContainer<Line>
+		class PlanarModel : public DrawableContainer
 		{
 		public:
 			PlanarModel();
-			PlanarModel(std::vector<Line*>, unsigned);
-			PlanarModel(Line);
+			PlanarModel(std::vector<Graphic::Graphic3D::DrawableObject*>, unsigned);
+			PlanarModel(Line*);
 		};
 	}
 }

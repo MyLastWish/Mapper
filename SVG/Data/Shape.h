@@ -2,7 +2,7 @@
 #define SVG_SHAPE_H
 #include <vector>
 #include "Path.h"
-#include "Graphic/Color.h"
+#include "../Graphic/Color.h"
 #include "3D/Line.h"
 namespace SVG
 {
@@ -13,12 +13,12 @@ namespace SVG
 		private:
 			std::vector<SVG::Data::Path*> _paths;
 			unsigned _pathCount;
-			API::Graphic::Color _fillColor;
-			API::Graphic::Color _strokeColor;
+			Graphic::Color _fillColor;
+			Graphic::Color _strokeColor;
 			float _lineWidth;
 
 			void _addPath(SVG::Data::Path*);
-			API::Graphic::Color _extractColor(NSVGpaint*);
+			Graphic::Color _extractColor(NSVGpaint*);
 		public:
 			Shape();
 			Shape(NSVGshape*);

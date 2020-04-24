@@ -16,7 +16,7 @@ SVG::Data::Shape::Shape(NSVGshape* originalShape) : Shape()
 	}
 }
 
-API::Graphic::Color SVG::Data::Shape::_extractColor(NSVGpaint* paint)
+Graphic::Color SVG::Data::Shape::_extractColor(NSVGpaint* paint)
 {
 	float r, g, b, a;
 	a = (float)((paint->color & 0xFF000000) >> 24);
@@ -27,7 +27,7 @@ API::Graphic::Color SVG::Data::Shape::_extractColor(NSVGpaint* paint)
 	g = g / 255.0f;
 	b = b / 255.0f;
 	a = a / 255.0f;
-	return API::Graphic::Color(r, g, b, a);
+	return Graphic::Color(r, g, b, a);
 }
 
 void SVG::Data::Shape::_addPath(SVG::Data::Path* path)

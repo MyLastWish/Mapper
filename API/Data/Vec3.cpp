@@ -1,4 +1,6 @@
 #include "Vec3.h"
+#include "Mat3.h"
+#include <iostream>
 API::Data::Vec3::Vec3()
 {
 }
@@ -86,7 +88,7 @@ bool API::Data::Vec3::operator!=(const API::Data::Vec3& other)
 	return X != other.X || Y != other.Y || Z != other.Z;
 }
 
-API::Data::Vec3& API::Data::Vec3::operator*(const float& factor)
+API::Data::Vec3 API::Data::Vec3::operator*(const float& factor)
 {
 	API::Data::Vec3 vec = API::Data::Vec3(X * factor, Y * factor, Z * factor);
 	return vec;
@@ -99,19 +101,37 @@ API::Data::Vec3& API::Data::Vec3::operator=(const API::Data::Vec3& other)
 	return *this;
 }
 
-API::Data::Vec3& API::Data::Vec3::operator-()
+API::Data::Vec3 API::Data::Vec3::operator-()
 {
 	API::Data::Vec3 vec = API::Data::Vec3(-X, -Y, -Z);
 	return vec;
-}API::Data::Vec3& API::Data::Vec3::operator-(const API::Data::Vec3& other)
+}API::Data::Vec3 API::Data::Vec3::operator-(const API::Data::Vec3& other)
 {
 	API::Data::Vec3 vec = API::Data::Vec3(X - other.X, Y - other.Y, Z - other.Z);
 	return vec;
 }
-API::Data::Vec3& API::Data::Vec3::operator+(const API::Data::Vec3& other)
+API::Data::Vec3 API::Data::Vec3::operator+(const API::Data::Vec3& other)
 {
 	API::Data::Vec3 vec = API::Data::Vec3(X + other.X, Y + other.Y, Z + other.Z);
 	return vec;
+}
+
+float& API::Data::Vec3::operator[](const int& index)
+{
+	assert(index >= 0 && index <= 2);
+	if (index == 0) return this->X;
+	if (index == 1) return this->Y;
+	if (index == 2) return this->Z;
+	return this->X;
+}
+
+float API::Data::Vec3::operator[](const int& index) const
+{
+	assert(index >= 0 && index <= 2);
+	if (index == 0) return this->X;
+	if (index == 1) return this->Y;
+	if (index == 2) return this->Z;
+	return this->X;
 }
 
 float API::Data::DotProduct(const API::Data::Vec3& first, const API::Data::Vec3& second)

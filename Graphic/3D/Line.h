@@ -25,7 +25,9 @@ namespace Graphic
 			Line();
 			Line(const Line&);
 			Line(Graphic::Graphic3D::Infos::LineInfo*);
+			~Line();
 		};
+		void copyLines(Line*, Line*);
 	}
 }
 #endif

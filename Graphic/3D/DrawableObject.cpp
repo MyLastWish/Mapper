@@ -4,11 +4,12 @@ void Graphic::Graphic3D::DrawableObject::_draw(Shader* shader)
 	shader->Use();
 	shader->Set4f("colorVector", _color.ToVec4());
 	glBindVertexArray(_vao);
-	glDrawElements(GL_TRIANGLES, _indexCount, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, _indexCount, GL_UNSIGNED_INT, (void*)_indices[0]);
 	glBindVertexArray(0);
 }
 void Graphic::Graphic3D::DrawableObject::_prepare()
 {
+	
 }
 void Graphic::Graphic3D::DrawableObject::_generateBuffers() // Podstawowa funkcja ktora przygotowuje bufory.
 {
@@ -22,7 +23,7 @@ void Graphic::Graphic3D::DrawableObject::_generateBuffers() // Podstawowa funkcj
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indexCount * sizeof(unsigned), &_indices[0], GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glBindVertexArray(0);
 }
 
@@ -35,7 +36,7 @@ void Graphic::Graphic3D::DrawableObject::_validate()
 	_readyToDraw = true;
 }
 
-Graphic::Graphic3D::DrawableObject::DrawableObject() : Positionable()
+Graphic::Graphic3D::DrawableObject::DrawableObject()
 {
 }
 
@@ -54,23 +55,23 @@ Graphic::Graphic3D::DrawableObject::DrawableObject(std::vector<API::Cartesian::P
 }
 Graphic::Graphic3D::DrawableObject::DrawableObject(std::vector<API::Cartesian::Point3D*> points, std::vector<unsigned> indices, std::vector<API::Data::Vec3> normals)
 {
-	for (int i = 0; i < indices.size(); i++)
+	for (int i = 0; i < points.size(); i++)
 	{
-		_coords.push_back(points[indices[i]]->GetX());
-		_coords.push_back(points[indices[i]]->GetY());
-		_coords.push_back(points[indices[i]]->GetZ());
+		_coords.push_back(points[i]->GetX());
+		_coords.push_back(points[i]->GetY());
+		_coords.push_back(points[i]->GetZ());
 		_normals.push_back(normals[i]);
 		_coordCount += 3;
 	}
 	_indices = indices;
-	_indexCount = _coordCount / 3u;
+	_indexCount = indices.size();
 	_normals = normals;
 }
 Graphic::Graphic3D::DrawableObject::DrawableObject(DrawableObject& original)
 {
 	copyDrawableObjects(&original, this);
 }
-void Graphic::Graphic3D::DrawableObject::Draw(Graphic::Shader* shader)
+void Graphic::Graphic3D::DrawableObject::_drawObject(Graphic::Shader* shader)
 {
 	if (shader == nullptr)
 	{

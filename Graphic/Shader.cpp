@@ -1,4 +1,5 @@
 #include "Shader.h"
+#include <iostream>
 Graphic::Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath)
 {
 	GLuint vertexShader;
@@ -101,9 +102,20 @@ bool Graphic::Shader::_isProgramCorrect(char* log)
 void Graphic::Shader::Set4f(const char* name, const API::Data::Vec4& value) const
 {
 	glUniform4f(glGetUniformLocation(_ID, name), value.X, value.Y, value.Z, value.W);
+	std::cout << name << " set to " << std::endl;
 }
 
 void Graphic::Shader::SetMatrix4f(const char* name, const API::Data::Mat4& value) const
 {
+	std::cout << name << std::endl;
+	std::cout << "------------" << std::endl;
+	for(int i = 0; i < 4; i++)
+	{
+		for(int j = 0; j < 4; j++)
+		{
+			std::cout << "[" << value[j][i] << "]\t\t";
+		}
+		std::cout << std::endl;
+	}
 	glUniformMatrix4fv(glGetUniformLocation(_ID, name), 1, false, value.GetMatrixPointer());
 }

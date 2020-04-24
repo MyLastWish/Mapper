@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include <iostream>
 Graphic::Graphic3D::Camera::Camera()
 {
 	_position = API::Data::Vec3(0.0f, 0.0f, 0.0f);
@@ -21,11 +22,13 @@ void Graphic::Graphic3D::Camera::_rotate(API::Data::Vec3& angles)
 	_frontNormal.Rotate(angles);
 	_rightNormal.Rotate(angles);
 	_upNormal.Rotate(angles);
+	_viewChanged = true;
 }
 
-void Graphic::Graphic3D::Camera::_move(API::Data::Vec3& translation)
+void Graphic::Graphic3D::Camera::_move(const API::Data::Vec3& translation)
 {
 	_position.Translate(translation);
+	_viewChanged = true;
 }
 
 void Graphic::Graphic3D::Camera::_changeZoom(float deltaZoom)
@@ -39,6 +42,7 @@ void Graphic::Graphic3D::Camera::_changeZoom(float deltaZoom)
 	{
 		_zoom == 45.0f;
 	}
+	_projectionChanged = true;
 }
 
 void Graphic::Graphic3D::Camera::Move(Graphic::Graphic3D::CameraMovement direction, float deltaTime)
@@ -83,18 +87,18 @@ API::Data::Vec3 Graphic::Graphic3D::Camera::GetPosition() const
 	return _position;
 }
 
-API::Data::Mat4* Graphic::Graphic3D::Camera::GetViewMatrix()
+API::Data::Mat4 Graphic::Graphic3D::Camera::GetViewMatrix()
 {
 	glm::vec3 position = glm::vec3(_position.X, _position.Y, _position.Z);
 	glm::vec3 front = glm::vec3(_frontNormal.X, _frontNormal.Y, _frontNormal.Z);
 	glm::vec3 up = glm::vec3(_upNormal.X, _upNormal.Y, _upNormal.Z);
 	glm::mat4 view = glm::lookAt(position, position + front, up);
-	API::Data::Mat4* result = new API::Data::Mat4();
+	API::Data::Mat4 result = API::Data::Mat4();
 	for(int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			result->SetValue(i, j, view[i][j]);
+			result.SetValue(i, j, view[i][j]);
 		}
 	}
 	return result;
@@ -112,4 +116,24 @@ API::Data::Mat4 Graphic::Graphic3D::Camera::GetProjectionMatrix(float screenWidt
 		}
 	}
 	return result;
+}
+
+void Graphic::Graphic3D::Camera::UpdateView(Graphic::Shader* shader)
+{
+	if(!_viewChanged)
+	{
+		return;
+	}
+	shader->SetMatrix4f("view", GetViewMatrix());
+	_viewChanged = false;
+}
+
+void Graphic::Graphic3D::Camera::UpdateProjection(Graphic::Shader* shader, float width, float height)
+{
+	if(!_projectionChanged)
+	{
+		return;
+	}
+	shader->SetMatrix4f("projection", GetProjectionMatrix(width, height));
+	_projectionChanged = false;
 }

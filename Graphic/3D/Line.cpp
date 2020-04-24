@@ -1,20 +1,28 @@
 #include "Line.h"
-Graphic::Graphic3D::Line::Line() : Drawable()
+#include <iostream>
+Graphic::Graphic3D::Line::Line() : DrawableObject()
 {
 }
 
-Graphic::Graphic3D::Line::Line(const Graphic::Graphic3D::Line& original) : Drawable()
+Graphic::Graphic3D::Line::Line(const Graphic::Graphic3D::Line& original) : DrawableObject()
 {
 }
 
-Graphic::Graphic3D::Line::Line(Graphic::Graphic3D::Infos::LineInfo* info) : Drawable()
+Graphic::Graphic3D::Line::Line(Graphic::Graphic3D::Infos::LineInfo* info) : DrawableObject()
 {
 	if (info->Length == 0.0f)
 	{
+		std::cout << "constructor out" << std::endl;
 		return; // TODO: Dodanie wywalania bledu.
 	}
+	std::cout << "In constructor" << std::endl;
 	_position = info->Start.ToVec3();
 	_drawAlong(info);
+}
+
+Graphic::Graphic3D::Line::~Line() 
+{
+	std::cout << "In destructor" << std::endl;
 }
 
 void Graphic::Graphic3D::Line::_drawAlong(Graphic::Graphic3D::Infos::LineInfo* info)
@@ -118,6 +126,13 @@ void Graphic::Graphic3D::Line::_drawAlong(Graphic::Graphic3D::Infos::LineInfo* i
 		_coords.push_back(points[i].Y);
 		_coords.push_back(points[i].Z);
 	}
+	for (int i = 0; i < iCount; i++)
+	{
+		_coords[3 * i] /= 400.0f;
+		_coords[(3 * i) + 1] /= 300.0f;
+	}
+	_position.X /=400.0f;
+	_position.Y /=300.0f;
 	_indices = indices;
 	_indexCount = iCount;
 	_coordCount = pCount * 3u;

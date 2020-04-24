@@ -1,8 +1,7 @@
 #ifndef VEC3_H
 #define VEC3_H
 #include <cmath>
-#include "Vec2.h"
-#include "Mat3.h"
+#include <assert.h>
 namespace API
 {
 	namespace Data
@@ -29,15 +28,18 @@ namespace API
 			// Pozyskiwanie kata pomiedzy tym wektorem, a podanym jako argument, wyrazony w katach dla kazdej z osi.
 			Vec3 AnglesFrom(const Vec3&);
 			float GetLength() const;
-			API::Data::Vec3& operator*(const float&);
-			API::Data::Vec3& operator=(const API::Data::Vec3&);
-			Vec3& operator-(const API::Data::Vec3&);
-			Vec3& operator-();
-			Vec3& operator+(const API::Data::Vec3&);
+			Vec3 operator*(const float&);
+			Vec3& operator=(const API::Data::Vec3&);
+			Vec3 operator-(const API::Data::Vec3&);
+			Vec3 operator-();
+			Vec3 operator+(const API::Data::Vec3&);
 			bool operator==(const API::Data::Vec3&);
 			bool operator!=(const API::Data::Vec3&);
+			float& operator[](const int&);
+			float operator[](const int&) const;
 			friend float DotProduct(const Vec3&, const Vec3&);
 		};
+		float DotProduct(const Vec3&, const Vec3&);
 	}
 }
 #endif

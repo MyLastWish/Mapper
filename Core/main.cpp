@@ -6,7 +6,9 @@
 #include "Callbacks.h"
 #include "Data/Image.h"
 #include "Mesh.h"
+#include "../Graphic/3D/Model.h"
 #include "Processors/ViewProcessor.h"
+#include "Scene.h"
 #include <glm/glm.hpp>
 int _glfwInitialize(GLFWwindow*& window)
 {
@@ -50,13 +52,20 @@ int main()
 	//glfwSetCursorPosCallback(window, Callbacks::MouseCallback);
 	SVG::Data::Image* image = new SVG::Data::Image("/run/media/adam/Data/Downloads/ex.svg");
 	Graphic::Shader* basicShader = new Graphic::Shader("/run/media/adam/Data/Coding/Projects/mapper/Core/basicShader.vert", "/run/media/adam/Data/Coding/Projects/mapper/Core/basicShader.frag");
-	Graphic::Graphic3D::PlanarModel* model = image->ToPlanarModel();
+	// Graphic::Graphic3D::PlanarModel* model = image->ToPlanarModel();
+	Graphic::Graphic3D::Model* mod = new Graphic::Graphic3D::Model();
+	mod->Load("/run/media/adam/Data/Design/'STL files'/xyzCalibration_cube.stl");
+	Graphic::Graphic3D::Scene* mainScene = new Graphic::Graphic3D::Scene(mainCamera, basicShader);
+	mainScene->Add(mod);
+	viewProc->SetScene(mainScene);
+	viewProc->SetSize(800.0f, 600.0f);
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.2f, 0.1f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		viewProc->ProcessKeyboardInput();
-		model->Draw(basicShader);
+		viewProc->UpdateMatrices();
+		mainScene->Redraw();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
